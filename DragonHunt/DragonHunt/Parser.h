@@ -32,7 +32,8 @@ struct TOKENDATA {
 				value("Go"){}
 
 	//left of the ':' is where you can init variables with arguments
-	TOKENDATA(TOKEN type): type(type){}
+	TOKENDATA(TOKEN type, std::string value): type(type),
+											value(value){}
 
 	TOKEN type;
 	std::string value;
@@ -46,5 +47,11 @@ public:
 
 	//returns a vector of tokendata
 	std::vector<TOKENDATA> parse(std::string toParse);
+private:
+	//finds if a token exists in a single word
+	std::string foundTokenInString(std::vector<std::string> words, int startIndex, TOKENPAIR target);
+
+	//keyword to token lookup
+	std::vector<TOKENPAIR> m_keywords;
 };
 
