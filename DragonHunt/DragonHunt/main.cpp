@@ -16,7 +16,23 @@ int main(int argc, char** argv) {
 		//a simple way to loop throug all the entries in a vector
 		for (auto d : data) {
 			//d has the value of the current entry
-			std::cout << d.value << std::endl;
+			std::cout << d.value <<std::endl;
+			switch (d.type) {
+			case TOKEN::GO:
+					std::cout << "GO\n";
+					break;
+			case TOKEN::PUSH:
+					std::cout << "PUSH\n";
+					break;
+			case TOKEN::PICKUP:
+					std::cout << "PICKUP\n";
+					break;
+			case TOKEN::HELP:
+				std::cout << "HELP\n";
+				break;
+			default:
+				std::cout << "oof\n";
+			};
 		}
 		std::getline(std::cin, input);
 	}

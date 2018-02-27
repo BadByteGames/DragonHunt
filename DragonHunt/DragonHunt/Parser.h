@@ -7,6 +7,9 @@ enum class TOKEN {
 	GO,
 	PICKUP,
 	DROP,
+	TAKE,
+	PUSH,
+	HELP,
 	OBJECT,
 	ENTITY
 };
@@ -53,5 +56,7 @@ private:
 
 	//keyword to token lookup
 	std::vector<TOKENPAIR> m_keywords;
+
+	std::string returnLower(std::string target);
 };
 

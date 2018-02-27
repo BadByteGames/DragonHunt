@@ -21,6 +21,10 @@ std::vector<TOKENDATA> Parser::parse(std::string toParse)
 	m_keywords.push_back(TOKENPAIR("go", TOKEN::GO));
 	m_keywords.push_back(TOKENPAIR("pick up", TOKEN::PICKUP));
 	m_keywords.push_back(TOKENPAIR("drop", TOKEN::DROP));
+	m_keywords.push_back(TOKENPAIR("take", TOKEN::TAKE));
+	m_keywords.push_back(TOKENPAIR("push", TOKEN::PUSH));
+	m_keywords.push_back(TOKENPAIR("help", TOKEN::HELP));
+	
 
 	std::vector<TOKENDATA> tokens;
 	std::istringstream iss(toParse);
@@ -52,7 +56,7 @@ std::string Parser::foundTokenInString(std::vector<std::string> words, int start
 	size_t nextPos = 0;
 
 	//find word in token (allows for spaces)
-	size_t pos = target.keyword.find_first_of(words[index]);
+	size_t pos = target.keyword.find(returnLower(words[index]));
 	if (pos == nextPos) {
 		returnvalue += words[index];
 		len -= words[index].length();	
@@ -71,7 +75,7 @@ std::string Parser::foundTokenInString(std::vector<std::string> words, int start
 		nextPos += words[index].length() + 1;
 		//move to next word
 		index += 1;
-		pos = target.keyword.find(words[index]);
+		pos = target.keyword.find(returnLower(words[index]));
 		//if word found, add it to the return value
 		if (pos == nextPos) {
 			returnvalue += " "+words[index];
@@ -90,4 +94,13 @@ std::string Parser::foundTokenInString(std::vector<std::string> words, int start
 		return returnvalue;
 	else
 		return "";
+}
+
+std::string Parser::returnLower(std::string target)
+{
+	std::string retVal = target;
+	for (auto &c : retVal) {
+		c = tolower(c);
+	}
+	return retVal;
 }
