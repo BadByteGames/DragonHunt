@@ -4,6 +4,10 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 15.0.27130.2010
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DragonHunt", "DragonHunt\DragonHunt.vcxproj", "{565D8B6E-FC42-4343-A565-BD66128B6DD5}"
+	ProjectSection(ProjectDependencies) = postProject
+		{7D706A02-A0F7-4E2A-9397-6B16C0A2D309} = {7D706A02-A0F7-4E2A-9397-6B16C0A2D309}
+		{C0D1A5C5-12E0-4C7B-811F-D7220D34548D} = {C0D1A5C5-12E0-4C7B-811F-D7220D34548D}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "EasyCmd", "EasyCmd\EasyCmd.vcxproj", "{C0D1A5C5-12E0-4C7B-811F-D7220D34548D}"
 EndProject
