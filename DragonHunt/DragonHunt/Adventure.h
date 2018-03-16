@@ -17,6 +17,9 @@ public:
 	void loadFromFile(std::string originFile);
 
 private:
+	void handleLocation(XMLElement* locationElement);
+	void handleCC(XMLElement* ccElement);
+
 	XMLDocument m_doc;
 	std::string m_name;
 	std::string m_startLocation;

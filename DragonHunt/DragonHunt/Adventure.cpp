@@ -60,9 +60,11 @@ void Adventure::loadFromFile(std::string originFile)
 		//perform actions based off element type
 		if (!strcmp("location", childOfAdv->Name())) {
 			//handle location
+			handleLocation(childOfAdv);
 		}
 		else if (!strcmp("cc", childOfAdv->Name())) {
 			//handle copyright info
+			handleCC(childOfAdv);
 		}
 		else {
 			std::cout << "Unknown element \"" << childOfAdv->Name() << "\" at line " << childOfAdv->GetLineNum() << std::endl;
@@ -97,4 +99,12 @@ void Adventure::loadFromFile(std::string originFile)
 			}
 		}
 	}
+}
+
+void Adventure::handleLocation(XMLElement * locationElement)
+{
+}
+
+void Adventure::handleCC(XMLElement * ccElement)
+{
 }
