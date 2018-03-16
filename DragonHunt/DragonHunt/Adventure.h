@@ -2,9 +2,9 @@
 #include <string>
 #include <tinyxml2\tinyxml2.h> // xml stuff
 
-#ifndef ENGINEVERSION
-#define ENGINEVERSION "1.0.0"
-#endif // ! ENGINEVERSION
+#ifndef FORMATVERSION
+#define FORMATVERSION "1.0"
+#endif // ! FORMATVERSION
 
 
 using namespace tinyxml2;

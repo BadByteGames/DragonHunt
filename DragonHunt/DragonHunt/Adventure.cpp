@@ -35,8 +35,8 @@ void Adventure::loadFromFile(std::string originFile)
 	}
 	else {
 		//cross check engine version
-		if (strcmp(adv->Attribute("version"), ENGINEVERSION)) {
-			std::cout << "Expected engine version " << ENGINEVERSION << " but adventure was written for version " << adv->Attribute("version") << " and no conversion specified." << std::endl;;
+		if (strcmp(adv->Attribute("version"), FORMATVERSION)) {
+			std::cout << "Expected format version " << FORMATVERSION << " but adventure was written for version " << adv->Attribute("version") << " and no conversion specified." << std::endl;;
 			return;
 		}
 	}
