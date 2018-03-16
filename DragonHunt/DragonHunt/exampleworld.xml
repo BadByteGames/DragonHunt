@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<adventure name="test" version="1.0.0" start="clearing">
+	<cc>
+		<li>This test adventure is in public domain and allowed for use by anybody.</li>
+	</cc>
+	<location name="clearing">
+		<description>A plain green clearing. The grass is short as if cut recently. <itemdesc name="clippers"/></description>
+		<item name="clippers">
+			<description>A pair of grass clippers with green handles. There is some rust on it but is still usable.</description>
+			<worldescription>A pair of clippers lies in the grass.</worldescription>
+			<pickup>
+				<print text="You pick up the clippers."/>
+			</pickup>
+			<use>
+				<print text="You don't know what to use it on."/>
+			</use>
+			<drop>
+				<print text="You lay down the clippers."/>
+			</drop>
+			<inspect>
+				<print text="A pair of grass clippers with green handles. There is some rust on it but is still usable."/>
+			</inspect>
+		</item>
+	</location>
+	<!--<useitem itemname="clippers">
+		<print text="You cut yourself with the clippers." />
+		<suicide/>
+	</useitem>
+	<ondeath>
+		<print text="You died" />
+	</ondeath>-->
+</adventure>

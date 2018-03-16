@@ -70,7 +70,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(TargetDir);$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir);$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)$(Configuration);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -126,9 +126,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Adventure.h" />
     <ClInclude Include="Parser.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Adventure.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Parser.cpp" />
   </ItemGroup>
