@@ -129,12 +129,14 @@
     <ClInclude Include="Adventure.h" />
     <ClInclude Include="Logger.h" />
     <ClInclude Include="Parser.h" />
+    <ClInclude Include="XMLHandler.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Adventure.cpp" />
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Parser.cpp" />
+    <ClCompile Include="XMLHandler.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
