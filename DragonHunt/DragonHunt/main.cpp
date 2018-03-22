@@ -1,5 +1,6 @@
 #include "Parser.h"
 #include "Adventure.h"
+#include "Logger.h"
 #include <string>
 #include <iostream>
 
@@ -8,6 +9,10 @@ int main(int argc, char** argv) {
 	//load in xml file
 	Adventure a;
 	a.loadFromFile("exampleworld.xml");
+
+	//test logger
+	Logger l;
+	l.init("test.log");
 
 	//get input then quit
 	std::string input = "";

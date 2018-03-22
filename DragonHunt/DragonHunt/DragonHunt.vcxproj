@@ -127,10 +127,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Adventure.h" />
+    <ClInclude Include="Logger.h" />
     <ClInclude Include="Parser.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Adventure.cpp" />
+    <ClCompile Include="Logger.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Parser.cpp" />
   </ItemGroup>
