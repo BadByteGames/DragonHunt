@@ -16,7 +16,7 @@ public:
 	~XMLHandler();
 
 	//creates an xml handler 
-	static XMLHandler* createElementHandler();
+	static XMLHandler* createElementHandler(std::string name);
 
 	void addAttribute(std::string name, bool required = false);
 
@@ -29,9 +29,12 @@ public:
 	//call on the root node to clean it up and destroy its children
 	void destroy();
 
+	//sets the root element of the handler (only call if root) then populates variables
+	void parseFromElement(tinyxml2::XMLElement* root);
+
 private:
 	//call upon creation of child
-	void init(std::string name);
+	void init(std::string name, tinyxml2::XMLElement* elementToParse);
 
 	//name , required
 	std::unordered_map<std::string, bool> m_attributeRules;
@@ -46,6 +49,6 @@ private:
 	std::unordered_map<std::string, XMLHandler*> m_childrenHandlers;
 
 	//name, element
-	std::multimap<std::string, tinyxml2::XMLElement> m_children;
+	std::multimap<std::string, tinyxml2::XMLElement*> m_children;
 };
 
