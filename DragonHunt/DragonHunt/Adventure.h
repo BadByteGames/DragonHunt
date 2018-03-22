@@ -2,13 +2,18 @@
 #include <string>
 #include <tinyxml2\tinyxml2.h> // xml stuff
 
+#include "XMLHandler.h"//custom xml stuff
+
 #ifndef FORMATVERSION
 #define FORMATVERSION "1.0"
 #endif // ! FORMATVERSION
 
 
-using namespace tinyxml2;
-class Adventure
+using tinyxml2::XMLDocument;
+using tinyxml2::XMLComment;
+using tinyxml2::XMLElement;
+using tinyxml2::XMLNode;
+class Adventure : public XMLHandler
 {
 public:
 	Adventure();
@@ -16,13 +21,9 @@ public:
 
 	void loadFromFile(std::string originFile);
 
+	virtual void onChildParsed(std::string name, XMLHandler * child);
 private:
-	void handleLocation(XMLElement* locationElement);
-	void handleCC(XMLElement* ccElement);
 
 	XMLDocument m_doc;
-	std::string m_name;
-	std::string m_startLocation;
-
 };
 

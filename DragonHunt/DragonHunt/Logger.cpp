@@ -6,9 +6,10 @@
 #include <iostream>
 #include <algorithm>
 
+std::string Logger::m_filename = "";
+
 Logger::Logger()
 {
-	m_filename = "";
 }
 
 
