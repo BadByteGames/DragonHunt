@@ -27,6 +27,7 @@ public:
 	std::string getText() const { return m_text; }
 
 	//called whenever a child is added in the parsing phase
+	//passes a pointer to XMLHandler which you WILL need to make a copy of because of class definition constrictions
 	virtual void onChildParsed(std::string name, XMLHandler * child) = 0;
 
 private:
@@ -50,6 +51,8 @@ private:
 	//name, bool (exists)
 	std::multimap<std::string, bool> m_children;
 
+protected:
+	// protected so we can modify in children classes
 	std::string m_text;
 };
 

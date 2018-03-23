@@ -6,6 +6,7 @@
 
 XMLHandler::XMLHandler()
 {
+	m_text = "";
 }
 
 
@@ -97,7 +98,7 @@ int XMLHandler::populateChildren(tinyxml2::XMLElement * elementToParse, bool use
 						auto secondIt = m_children.find(currentElement->Name());
 						if (secondIt != m_children.end()) {
 							std::cout << "An error occurred, please check runtime.log for details" << std::endl;
-							Logger::logEvent("error", "Element at line " + std::to_string(p->GetLineNum()) + ": " + p->Value() + " already exists, please remove it.");
+							Logger::logEvent("error", "Element at line " + std::to_string(p->GetLineNum()) + ": \"" + p->Value() + "\" already exists, please remove it.");
 							return 1;
 						}
 					}
@@ -109,6 +110,8 @@ int XMLHandler::populateChildren(tinyxml2::XMLElement * elementToParse, bool use
 					handler->parseFromElement(currentElement, it->second & XMLChildFlag::USESTEXT);
 					//next, call this object's "onchildparsed"
 					onChildParsed(currentElement->Name(), handler);
+					//make sure to clear that child's text
+					handler->m_text = "";
 				}
 				else {
 					std::cout << "An error occurred, please check runtime.log for details" << std::endl;
@@ -135,6 +138,20 @@ int XMLHandler::populateChildren(tinyxml2::XMLElement * elementToParse, bool use
 		}
 		//progress p's index
 		p = p->NextSibling();
+	}
+
+
+	//lastly, we make sure that all required elements were met
+	for (auto it : m_childrenRules) {
+		if (it.second & XMLChildFlag::REQUIRED) {
+			if (m_children.find(it.first) == m_children.end()) {
+				//we didn't find a required item
+				std::cout << "An error occurred, please check runtime.log for details" << std::endl;
+				//create string to allow for addition
+				Logger::logEvent("error", "Element \"" + std::string(elementToParse->Name()) + "\" (line " + std::to_string(elementToParse->GetLineNum())+") expected a child element \"" + it.first+"\"");
+				return 1;
+			}
+		}
 	}
 
 	return 0;
