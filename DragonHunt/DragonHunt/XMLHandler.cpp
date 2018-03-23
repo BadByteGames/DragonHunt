@@ -9,7 +9,6 @@ XMLHandler::XMLHandler()
 	m_text = "";
 }
 
-
 XMLHandler::~XMLHandler()
 {
 }

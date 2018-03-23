@@ -2,6 +2,8 @@
 
 #include "XMLHandler.h"
 
+#include <vector>
+
 class li : public XMLHandler {
 public:
 	li();
@@ -17,5 +19,10 @@ public:
 	~CCHandler();
 
 	virtual void onChildParsed(std::string name, XMLHandler * child);
+
+	std::vector<std::string> getLines() const { return m_lines; }
+
+private:
+	std::vector<std::string> m_lines;
 };
 

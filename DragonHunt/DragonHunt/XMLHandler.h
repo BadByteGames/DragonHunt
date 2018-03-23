@@ -28,7 +28,7 @@ public:
 
 	//called whenever a child is added in the parsing phase
 	//passes a pointer to XMLHandler which you WILL need to make a copy of because of class definition constrictions
-	virtual void onChildParsed(std::string name, XMLHandler * child) = 0;
+	virtual void onChildParsed(std::string name, XMLHandler * child) {};
 
 private:
 	//used to parse attributes

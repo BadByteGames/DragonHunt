@@ -44,10 +44,32 @@ void Adventure::loadFromFile(std::string originFile)
 	if (this->parseFromElement(m_doc.FirstChildElement())) {
 		Logger::logEvent("Adventure", "Adventure parsing failed");
 	}
+	else {
+		//print out cc
+		for (auto li : m_lines) {
+			Logger::logEvent("cc", li);
+			std::cout << li << std::endl;
+		}
+		if (m_lines.size() > 0) {
+			std::cout << "By pressing ENTER you accept this license and acknoledge reading it." << std::endl;
+			std::string filler;
+			std::getline(std::cin, filler);
+		}
+	}
 
 	this->destroy();
 }
 
 void Adventure::onChildParsed(std::string name, XMLHandler * child)
 {
+	//add cc handler if detected
+	if (name == "cc") {
+		//safe cast
+		m_lines = ((CCHandler *)child)->getLines();
+	}
+	else if (name == "location") {
+		//create a location object then push back
+		Location l = (Location)*((Location*)child);
+		m_locations.insert(std::make_pair(l.getAttribute("name"), l));
+	}
 }

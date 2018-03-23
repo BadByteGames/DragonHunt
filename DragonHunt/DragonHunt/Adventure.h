@@ -4,6 +4,8 @@
 
 #include "XMLHandler.h"//custom xml stuff
 
+#include "Location.h" //locations
+
 #ifndef FORMATVERSION
 #define FORMATVERSION "1.0"
 #endif // ! FORMATVERSION
@@ -25,5 +27,8 @@ public:
 private:
 
 	XMLDocument m_doc;
+	std::vector<std::string> m_lines;
+
+	std::unordered_map<std::string, Location> m_locations;
 };
 
