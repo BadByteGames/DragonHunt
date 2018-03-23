@@ -127,19 +127,23 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Adventure.h" />
+    <ClInclude Include="AdventureItem.h" />
     <ClInclude Include="CCHandler.h" />
     <ClInclude Include="Location.h" />
     <ClInclude Include="Logger.h" />
     <ClInclude Include="Parser.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="XMLHandler.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Adventure.cpp" />
+    <ClCompile Include="AdventureItem.cpp" />
     <ClCompile Include="CCHandler.cpp" />
     <ClCompile Include="Location.cpp" />
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Parser.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="XMLHandler.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
