@@ -51,7 +51,7 @@ void Adventure::loadFromFile(std::string originFile)
 			std::cout << li << std::endl;
 		}
 		if (m_lines.size() > 0) {
-			std::cout << "By pressing ENTER you accept this license and acknoledge reading it." << std::endl;
+			std::cout << "By pressing ENTER you accept this license and acknowledge reading it." << std::endl;
 			std::string filler;
 			std::getline(std::cin, filler);
 		}
