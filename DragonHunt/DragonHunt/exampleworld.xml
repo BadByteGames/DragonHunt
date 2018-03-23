@@ -4,7 +4,7 @@
 		<li>This test adventure is in public domain and allowed for use by anybody.</li>
 	</cc>
 	<location name="clearing">
-		<description>A plain green clearing. The grass is short as if cut recently. <itemdesc name="clippers"/></description>
+		<!--<description>A plain green clearing. The grass is short as if cut recently. <itemdesc name="clippers"/></description>
 		<item name="clippers">
 			<description>A pair of grass clippers with green handles. There is some rust on it but is still usable.</description>
 			<worldescription>A pair of clippers lies in the grass.</worldescription>
@@ -20,7 +20,7 @@
 			<inspect>
 				<print text="A pair of grass clippers with green handles. There is some rust on it but is still usable."/>
 			</inspect>
-		</item>
+		</item>-->
 	</location>
 	<!--<useitem itemname="clippers">
 		<print text="You cut yourself with the clippers." />

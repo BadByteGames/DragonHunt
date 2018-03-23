@@ -4,10 +4,7 @@
 #include <tinyxml2\tinyxml2.h>
 #include <map>
 
-enum XMLChildFlag {REQUIRED = 0x1, MULTIPLE = 0x2};
-
-//if a text element, will have different parser looking for text filling
-enum XMLElementFlag {TEXTELEMENT = 0x1};
+enum XMLChildFlag {REQUIRED = 0x1, MULTIPLE = 0x2, USESTEXT = 0x4};
 
 class XMLHandler
 {
@@ -25,7 +22,9 @@ public:
 	void destroy();
 
 	//sets the root element of the handler (only call publicy if root) then populates variables
-	int parseFromElement(tinyxml2::XMLElement* root);
+	int parseFromElement(tinyxml2::XMLElement* root, bool usesText=false);
+
+	std::string getText() const { return m_text; }
 
 	//called whenever a child is added in the parsing phase
 	virtual void onChildParsed(std::string name, XMLHandler * child) = 0;
@@ -34,7 +33,7 @@ private:
 	//used to parse attributes
 	int populateAttributes(tinyxml2::XMLElement* elementToParse);
 
-	int populateChildren(tinyxml2::XMLElement* elementToParse);
+	int populateChildren(tinyxml2::XMLElement* elementToParse, bool usesText);
 
 	//name , required
 	std::unordered_map<std::string, bool> m_attributeRules;
@@ -48,7 +47,9 @@ private:
 	//name, value
 	std::unordered_map<std::string, XMLHandler*> m_childrenHandlers;
 
-	//name, element
-	std::multimap<std::string, XMLHandler*> m_children;
+	//name, bool (exists)
+	std::multimap<std::string, bool> m_children;
+
+	std::string m_text;
 };
 

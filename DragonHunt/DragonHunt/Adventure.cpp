@@ -2,6 +2,8 @@
 #include <iostream>
 
 #include "Logger.h"
+#include "Location.h"
+#include "CCHandler.h"
 
 Adventure::Adventure()
 {
@@ -29,6 +31,15 @@ void Adventure::loadFromFile(std::string originFile)
 	this->addAttribute("name", true);
 	this->addAttribute("version", true);
 	this->addAttribute("start", true);
+
+	Location* locationHandler = new Location();
+	locationHandler->addAttribute("name", true);
+
+	CCHandler* ccHandler = new CCHandler();
+	ccHandler->addChild("li", new li(), XMLChildFlag::MULTIPLE | XMLChildFlag::REQUIRED | XMLChildFlag::USESTEXT);
+
+	this->addChild("location", locationHandler, XMLChildFlag::MULTIPLE | XMLChildFlag::REQUIRED);
+	this->addChild("cc", ccHandler);
 
 	if (this->parseFromElement(m_doc.FirstChildElement())) {
 		Logger::logEvent("Adventure", "Adventure parsing failed");
