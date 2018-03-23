@@ -84,42 +84,37 @@ int XMLHandler::populateChildren(tinyxml2::XMLElement * elementToParse, bool use
 		//so we know that p is a node so next we will go through everything and see If we can identify it
 		if (p->ToElement() != NULL) {
 			auto currentElement = p->ToElement();
-			if (!usesText) {
-				//make sure that this element is one of the allowed
-				auto it = m_childrenRules.find(currentElement->Name());
-				if (it != m_childrenRules.end()) {
-					//check if multiple are allowed
-					if (it->second & XMLChildFlag::MULTIPLE) {
-						//no checks are needed 
-					}
-					else {
-						//check the element wasn't already found as there can only be one
-						auto secondIt = m_children.find(currentElement->Name());
-						if (secondIt != m_children.end()) {
-							std::cout << "An error occurred, please check runtime.log for details" << std::endl;
-							Logger::logEvent("error", "Element at line " + std::to_string(p->GetLineNum()) + ": \"" + p->Value() + "\" already exists, please remove it.");
-							return 1;
-						}
-					}
-					//seems legit so now we can do stuff
-					//mark as added
-					m_children.insert(std::make_pair(currentElement->Name(), true));
-					//call that child's parser
-					auto handler = m_childrenHandlers.find(currentElement->Name())->second;
-					handler->parseFromElement(currentElement, it->second & XMLChildFlag::USESTEXT);
-					//next, call this object's "onchildparsed"
-					onChildParsed(currentElement->Name(), handler);
-					//make sure to clear that child's text
-					handler->m_text = "";
+			//make sure that this element is one of the allowed
+			auto it = m_childrenRules.find(currentElement->Name());
+			if (it != m_childrenRules.end()) {
+				//check if multiple are allowed
+				if (it->second & XMLChildFlag::MULTIPLE) {
+					//no checks are needed 
 				}
 				else {
-					std::cout << "An error occurred, please check runtime.log for details" << std::endl;
-					Logger::logEvent("error", "Unknown element at line " + std::to_string(p->GetLineNum()) + ": " + p->Value());
-					return 1;
+					//check the element wasn't already found as there can only be one
+					auto secondIt = m_children.find(currentElement->Name());
+					if (secondIt != m_children.end()) {
+						std::cout << "An error occurred, please check runtime.log for details" << std::endl;
+						Logger::logEvent("error", "Element at line " + std::to_string(p->GetLineNum()) + ": \"" + p->Value() + "\" already exists, please remove it.");
+						return 1;
+					}
 				}
+				//seems legit so now we can do stuff
+				//mark as added
+				m_children.insert(std::make_pair(currentElement->Name(), true));
+				//call that child's parser
+				auto handler = m_childrenHandlers.find(currentElement->Name())->second;
+				if(handler->parseFromElement(currentElement, it->second & XMLChildFlag::USESTEXT)) return 1;
+				//next, call this object's "onchildparsed"
+				onChildParsed(currentElement->Name(), handler);
+				//make sure to clear that child's text
+				handler->m_text = "";
 			}
 			else {
-				//uses text
+				std::cout << "An error occurred, please check runtime.log for details" << std::endl;
+				Logger::logEvent("error", "Unknown element at line " + std::to_string(p->GetLineNum()) + ": " + p->Value());
+				return 1;
 			}
 		}
 		else if (p->ToComment() != NULL) {

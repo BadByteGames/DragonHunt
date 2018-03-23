@@ -5,8 +5,8 @@
 		<li>Originally written by Robert White (armedturret).</li>
 	</cc>
 	<location name="clearing">
-		<!--<description>A plain green clearing. The grass is short as if cut recently. <itemdesc name="clippers"/></description>
-		<item name="clippers">
+		<description>A plain green clearing. The grass is short as if cut recently. <itemdesc name="clippers"/></description>
+		<!--<item name="clippers">
 			<description>A pair of grass clippers with green handles. There is some rust on it but is still usable.</description>
 			<worldescription>A pair of clippers lies in the grass.</worldescription>
 			<pickup>

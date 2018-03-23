@@ -35,6 +35,15 @@ void Adventure::loadFromFile(std::string originFile)
 	Location* locationHandler = new Location();
 	locationHandler->addAttribute("name", true);
 
+	LocationDescription* locationDescription = new LocationDescription();
+
+	LocationItemDesc* locationItemDesc = new LocationItemDesc();
+	locationItemDesc->addAttribute("name", true);
+
+	locationDescription->addChild("itemdesc",locationItemDesc, XMLChildFlag::MULTIPLE | XMLChildFlag::REQUIRED);
+	
+	locationHandler->addChild("description", locationDescription, XMLChildFlag::REQUIRED | XMLChildFlag::USESTEXT);
+
 	CCHandler* ccHandler = new CCHandler();
 	ccHandler->addChild("li", new li(), XMLChildFlag::MULTIPLE | XMLChildFlag::REQUIRED | XMLChildFlag::USESTEXT);
 
