@@ -2,7 +2,7 @@
 <adventure name="test" version="1.0" start="clearing">
 	<cc>
 		<li>This test adventure is in public domain and allowed for use by anybody.</li>
-		<li>Originally wrote by Robert White (armedturret).</li>
+		<li>Originally written by Robert White (armedturret).</li>
 	</cc>
 	<location name="clearing">
 		<!--<description>A plain green clearing. The grass is short as if cut recently. <itemdesc name="clippers"/></description>
