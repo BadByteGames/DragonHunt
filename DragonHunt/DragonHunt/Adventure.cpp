@@ -20,35 +20,18 @@ void Adventure::loadFromFile(std::string originFile)
 	m_doc.LoadFile(originFile.c_str());
 
 	if (m_doc.FirstChildElement("adventure") == NULL) {
-		std::cout << "Element \"adventure\" was not found." << std::endl;
-		Logger::logEvent("Adventure", "Element \"adventure\" was not found.");
+		std::cout << "An error occurred, check runtime.log for details." << std::endl;
+		Logger::logEvent("error", "Element \"adventure\" was not found.");
 		return;
 	}
-
-	//this is already a hander so its fine
 
 	//add attribute name, version, and start
 	this->addAttribute("name", true);
 	this->addAttribute("version", true);
 	this->addAttribute("start", true);
 
-	Location* locationHandler = new Location();
-	locationHandler->addAttribute("name", true);
-
-	LocationDescription* locationDescription = new LocationDescription();
-
-	LocationItemDesc* locationItemDesc = new LocationItemDesc();
-	locationItemDesc->addAttribute("name", true);
-
-	locationDescription->addChild("itemdesc",locationItemDesc, XMLChildFlag::MULTIPLE | XMLChildFlag::REQUIRED);
-	
-	locationHandler->addChild("description", locationDescription, XMLChildFlag::REQUIRED | XMLChildFlag::USESTEXT);
-
-	CCHandler* ccHandler = new CCHandler();
-	ccHandler->addChild("li", new li(), XMLChildFlag::MULTIPLE | XMLChildFlag::REQUIRED | XMLChildFlag::USESTEXT);
-
-	this->addChild("location", locationHandler, XMLChildFlag::MULTIPLE | XMLChildFlag::REQUIRED);
-	this->addChild("cc", ccHandler);
+	this->addChild("location", new Location(), XMLChildFlag::MULTIPLE | XMLChildFlag::REQUIRED);
+	this->addChild("cc", new CCHandler());
 
 	if (this->parseFromElement(m_doc.FirstChildElement())) {
 		Logger::logEvent("Adventure", "Adventure parsing failed");

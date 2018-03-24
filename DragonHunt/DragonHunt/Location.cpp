@@ -4,6 +4,9 @@
 
 Location::Location()
 {
+	this->addChild("description", new LocationDescription(), XMLChildFlag::REQUIRED | XMLChildFlag::USESTEXT);
+
+	this->addAttribute("name", true);
 }
 
 
@@ -20,7 +23,8 @@ void Location::onChildParsed(std::string name, XMLHandler * child)
 }
 
 LocationDescription::LocationDescription()
-{
+{	
+	this->addChild("itemdesc", new LocationItemDesc(), XMLChildFlag::MULTIPLE | XMLChildFlag::REQUIRED);
 }
 
 LocationDescription::~LocationDescription()
@@ -37,6 +41,7 @@ void LocationDescription::onChildParsed(std::string name, XMLHandler * child)
 
 LocationItemDesc::LocationItemDesc()
 {
+	this->addAttribute("name", true);
 }
 
 LocationItemDesc::~LocationItemDesc()

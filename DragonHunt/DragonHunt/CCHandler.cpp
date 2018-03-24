@@ -4,6 +4,7 @@
 
 CCHandler::CCHandler()
 {
+	this->addChild("li", new li(), XMLChildFlag::MULTIPLE | XMLChildFlag::REQUIRED | XMLChildFlag::USESTEXT);
 }
 
 

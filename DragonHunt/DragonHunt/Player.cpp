@@ -14,7 +14,7 @@ Player::~Player()
 void Player::triggerEvent(std::string name)
 {
 	//checks if the trigger is local or not
-	if (name.length > 0 && name[0] == '!') {
+	if (name.length() > 0 && name[0] == '!') {
 		//destination trigger is local
 	}
 	else {
