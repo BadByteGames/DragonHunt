@@ -26,5 +26,7 @@ public:
 	~Location();
 
 	virtual void onChildParsed(std::string name, XMLHandler * child);
+
+	std::string m_description;
 };
 

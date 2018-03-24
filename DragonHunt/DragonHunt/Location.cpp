@@ -16,10 +16,11 @@ Location::~Location()
 
 void Location::onChildParsed(std::string name, XMLHandler * child)
 {
-	//print out the description for debug
+	//set the location's description
 	if (name == "description") {
-		std::cout << child->getText() << std::endl;
+		m_description = child->getText();
 	}
+	
 }
 
 LocationDescription::LocationDescription()
