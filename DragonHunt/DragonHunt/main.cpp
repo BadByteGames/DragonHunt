@@ -1,6 +1,7 @@
 #include "Parser.h"
 #include "Adventure.h"
 #include "Logger.h"
+#include "Events.h"
 #include <string>
 #include <iostream>
 

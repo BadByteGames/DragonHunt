@@ -7,17 +7,17 @@
 //an item that can be found in an event list
 class SequenceItem
 {
-friend Event;
+friend class Event;
 public:
 	SequenceItem();
 	~SequenceItem();
 
 	//create a print call from the current paramaters
 	//returns nullptr if failed
-	virtual SequenceItem* create() = 0;
+	virtual SequenceItem* create() { return nullptr;  };
 
 	//call of a function
-	virtual int onCall() = 0;
+	virtual int onCall() { return 1; };
 
 protected:
 	void requireArgument(std::string name);
@@ -47,6 +47,12 @@ class Event
 public:
 	Event();
 	~Event();
+
+	int parseFromElement(tinyxml2::XMLElement* rootNode);
+
+	void execute();
+
+	void destroy();
 
 private:
 	//name, sequence item a list of possible sequence items
