@@ -33,6 +33,10 @@ void Adventure::loadFromFile(std::string originFile)
 	this->addChild("location", new Location(), XMLChildFlag::MULTIPLE | XMLChildFlag::REQUIRED);
 	this->addChild("cc", new CCHandler());
 
+	//create events
+	Event autoCall;
+	this->addEvent("autocall", autoCall);
+	
 	if (this->parseFromElement(m_doc.FirstChildElement())) {
 		Logger::logEvent("Adventure", "Adventure parsing failed");
 	}
@@ -48,6 +52,8 @@ void Adventure::loadFromFile(std::string originFile)
 			std::getline(std::cin, filler);
 		}
 	}
+	if(wasEventDefined("autocall"))
+		this->executeEvent("autocall");
 
 	this->destroy();
 }

@@ -182,6 +182,13 @@ void XMLHandler::addEvent(std::string name, Event evnt)
 	m_events.insert(std::make_pair(name, evnt));
 }
 
+void XMLHandler::executeEvent(std::string name)
+{
+	Logger::logEvent("XMLHandler-Event", "Executing event " + name+".");
+	m_events.find(name)->second.execute();
+	Logger::logEvent("XMLHandler-Event", "Finished executing "+name+".");
+}
+
 bool XMLHandler::wasEventDefined(std::string name)
 {
 	if (m_eventDefined.find(name) != m_eventDefined.end())

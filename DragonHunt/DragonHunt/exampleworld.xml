@@ -33,5 +33,7 @@
 	<!--A little example test event-->
 	<autocall>
 		<print text="I've been called!"/>
+		<print text="This is great!"/>
+		<print text="Hello word!"/>
 	</autocall>
 </adventure>

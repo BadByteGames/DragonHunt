@@ -63,6 +63,9 @@ protected:
 	//creates an event for this xml handler
 	void addEvent(std::string name, Event evnt);
 
+	//runs the specefied event, make sure to check whether it was defined
+	void executeEvent(std::string name);
+
 	//checks if the user defined that elements
 	bool wasEventDefined(std::string name);
 

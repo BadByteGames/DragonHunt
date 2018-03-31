@@ -33,6 +33,8 @@ int Event::parseFromElement(tinyxml2::XMLElement* rootNode)
 				//create a copy
 				SequenceItem* si = it->second->create();
 				
+				Logger::logEvent("Event", "Creating sequence item "+it->first+".");
+
 				//now to loop through required arguments
 				for (auto cur : si->m_requiredArgs) {
 					//get argument from element
@@ -68,8 +70,9 @@ int Event::parseFromElement(tinyxml2::XMLElement* rootNode)
 
 void Event::execute()
 {
-	for (auto si : m_sequence) {
-		si->onCall();
+	for (size_t i = 0; i < m_sequence.size(); i++) {
+		Logger::logEvent("Event", "Running sequence item "+std::to_string(i));
+		m_sequence[i]->onCall();
 	}
 }
 
