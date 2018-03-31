@@ -1,6 +1,8 @@
 #include "Player.h"
 
 #include "Logger.h"
+#include "Adventure.h"
+
 
 Player::Player()
 {
@@ -11,7 +13,7 @@ Player::~Player()
 {
 }
 
-void Player::triggerEvent(std::string name)
+void Player::triggerEvent(std::string name, Adventure* adv)
 {
 	//checks if the trigger is local or not
 	if (name.length() > 0 && name[0] == '!') {
@@ -24,10 +26,12 @@ void Player::triggerEvent(std::string name)
 			//already exists
 			it->second = true;
 			Logger::logEvent("player", name + " triggered");
+			adv->callTrigger(name);
 		}
 		else {
 			m_triggers.insert(std::make_pair(name, true));
 			Logger::logEvent("player", name + " triggered");
+			adv->callTrigger(name);
 		}
 	}
 }

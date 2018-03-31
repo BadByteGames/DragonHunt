@@ -5,7 +5,7 @@
 #include "Location.h"
 #include "CCHandler.h"
 
-Adventure::Adventure()
+Adventure::Adventure():m_player()
 {
 }
 
@@ -35,8 +35,15 @@ void Adventure::loadFromFile(std::string originFile)
 
 	//create events
 	Event autoCall;
+	Event trigger;
+
+	//make sure to add trigger sequence item
+	autoCall.addSequencePossibility("trigger", new Trigger(&m_player, this));
+	trigger.addSequencePossibility("trigger", new Trigger(&m_player, this));
+
 	this->addEvent("autocall", autoCall);
-	
+	this->addEvent("trigger", trigger);
+
 	if (this->parseFromElement(m_doc.FirstChildElement())) {
 		Logger::logEvent("Adventure", "Adventure parsing failed");
 	}
@@ -53,13 +60,17 @@ void Adventure::loadFromFile(std::string originFile)
 		}
 	}
 
-	if(wasEventDefined("autocall","order:first"))
-		this->executeEvent("autocall", "order:first");
-
-	if (wasEventDefined("autocall", "order:second"))
-		this->executeEvent("autocall", "order:second");
+	if(wasEventDefined("autocall"))
+		this->executeEvent("autocall");
 
 	this->destroy();
+}
+
+void Adventure::callTrigger(std::string name)
+{
+	if (wasEventDefined("trigger", "triggername:" + name)) {
+		executeEvent("trigger", "triggername:" + name);
+	}
 }
 
 void Adventure::onChildParsed(std::string name, XMLHandler * child)
@@ -74,4 +85,24 @@ void Adventure::onChildParsed(std::string name, XMLHandler * child)
 		Location l = (Location)*((Location*)child);
 		m_locations.insert(std::make_pair(l.getAttribute("name"), l));
 	}
+}
+
+Trigger::Trigger(Player* player,Adventure* adventure):m_player(player),m_adv(adventure)
+{
+	requireArgument("triggername");
+}
+
+Trigger::~Trigger()
+{
+}
+
+SequenceItem * Trigger::create()
+{
+	return new Trigger(m_player, m_adv);
+}
+
+int Trigger::onCall()
+{
+	m_player->triggerEvent(getArgument("triggername"),m_adv);
+	return 0;
 }

@@ -50,6 +50,8 @@ public:
 
 	int parseFromElement(tinyxml2::XMLElement* rootNode);
 
+	void addSequencePossibility(std::string name, SequenceItem* si);
+
 	void execute();
 
 	void destroySequenceOnly();

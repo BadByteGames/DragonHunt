@@ -68,6 +68,11 @@ int Event::parseFromElement(tinyxml2::XMLElement* rootNode)
 	return 0;
 }
 
+void Event::addSequencePossibility(std::string name, SequenceItem * si)
+{
+	m_sequencePossibilities.insert(std::make_pair(name, si));
+}
+
 void Event::execute()
 {
 	for (size_t i = 0; i < m_sequence.size(); i++) {

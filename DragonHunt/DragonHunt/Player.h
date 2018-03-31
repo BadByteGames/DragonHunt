@@ -3,6 +3,8 @@
 #include <string>
 #include <unordered_map>
 
+class Adventure;
+
 class Player
 {
 public:
@@ -10,7 +12,7 @@ public:
 	~Player();
 
 	//the player class will be managing triggers and event calling
-	void triggerEvent(std::string name);
+	void triggerEvent(std::string name, Adventure* adv);
 
 	//mostly called by events to check if a certain thing was triggered
 	bool wasTriggered(std::string name);
