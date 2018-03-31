@@ -43,6 +43,11 @@ void XMLHandler::destroy()
 		it.second->destroy();
 		delete it.second;
 	}
+
+	//clean up the events
+	for (auto it : m_events) {
+		it.second.destroy();
+	}
 }
 
 int XMLHandler::parseFromElement(tinyxml2::XMLElement * root, bool usesText)
@@ -111,6 +116,27 @@ int XMLHandler::populateChildren(tinyxml2::XMLElement * elementToParse, bool use
 				//make sure to clear that child's text
 				handler->m_text = "";
 			}
+			//check if that element is an event
+			else if (m_events.find(currentElement->Name()) != m_events.end()) {
+				Logger::logEvent("XMLHandler", "began parsing element " + std::string(currentElement->Name()) + " at line " + std::to_string(currentElement->GetLineNum()));
+				//check if wasn't defined
+				if (!wasEventDefined(currentElement->Name())) {
+					//found an event so just call its sequence builder
+					auto evnt = m_events.find(currentElement->Name());
+					if (evnt->second.parseFromElement(currentElement)) {
+						return 1;
+					}
+
+					//next we add it to the defined events
+					m_eventDefined.insert(std::make_pair(currentElement->Name(), true));
+				}
+				else {
+					std::cout << "An error occurred, please check runtime.log for details" << std::endl;
+					Logger::logEvent("error", "Event at line " + std::to_string(currentElement->GetLineNum()) + " was already defined.");
+					return 1;
+				}
+				Logger::logEvent("XMLHandler", "finished parsing element " + std::string(currentElement->Name()));
+			}
 			else {
 				std::cout << "An error occurred, please check runtime.log for details" << std::endl;
 				Logger::logEvent("error", "Unknown element at line " + std::to_string(p->GetLineNum()) + ": " + p->Value());
@@ -149,4 +175,16 @@ int XMLHandler::populateChildren(tinyxml2::XMLElement * elementToParse, bool use
 	}
 
 	return 0;
+}
+
+void XMLHandler::addEvent(std::string name, Event evnt)
+{
+	m_events.insert(std::make_pair(name, evnt));
+}
+
+bool XMLHandler::wasEventDefined(std::string name)
+{
+	if (m_eventDefined.find(name) != m_eventDefined.end())
+		return m_eventDefined.find(name)->second;
+	return false;
 }

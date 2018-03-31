@@ -38,6 +38,7 @@ int Event::parseFromElement(tinyxml2::XMLElement* rootNode)
 					//get argument from element
 					if (e->Attribute(cur.first.c_str()) != NULL) {
 						si->m_arguments.insert(std::make_pair(cur.first, e->Attribute(cur.first.c_str())));
+						Logger::logEvent("Event", cur.first + " = " + e->Attribute(cur.first.c_str()));
 					}
 					else {
 						std::cout << "An error occurred, please check runtime.log for details" << std::endl;
@@ -82,14 +83,6 @@ void Event::destroy()
 	for (auto it : m_sequencePossibilities) {
 		delete it.second;
 	}
-}
-
-EventList::EventList()
-{
-}
-
-EventList::~EventList()
-{
 }
 
 SequenceItem::SequenceItem()

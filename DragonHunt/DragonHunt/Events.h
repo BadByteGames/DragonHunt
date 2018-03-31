@@ -61,13 +61,3 @@ private:
 	//a vector defined at build time of what to do
 	std::vector<SequenceItem*> m_sequence;
 };
-
-//the Event list class will be used to manage events for anyclass that supports them
-class EventList
-{
-public:
-	EventList();
-	~EventList();
-
-
-};

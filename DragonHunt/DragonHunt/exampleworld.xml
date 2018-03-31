@@ -31,7 +31,7 @@
 		<print text="You died" />
 	</ondeath>-->
 	<!--A little example test event-->
-	<!--<autocall>
+	<autocall>
 		<print text="I've been called!"/>
-	</autocall>-->
+	</autocall>
 </adventure>

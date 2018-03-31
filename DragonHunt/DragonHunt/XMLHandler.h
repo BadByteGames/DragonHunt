@@ -4,6 +4,8 @@
 #include <tinyxml2\tinyxml2.h>
 #include <map>
 
+#include "Events.h"
+
 enum XMLChildFlag {REQUIRED = 0x1, MULTIPLE = 0x2, USESTEXT = 0x4};
 
 class XMLHandler
@@ -50,8 +52,20 @@ private:
 
 	//name, bool (exists)
 	std::multimap<std::string, bool> m_children;
+	
+	//name, Event
+	std::unordered_map<std::string, Event> m_events;
+
+	//name, wasDefined
+	std::unordered_map<std::string, bool> m_eventDefined;
 
 protected:
+	//creates an event for this xml handler
+	void addEvent(std::string name, Event evnt);
+
+	//checks if the user defined that elements
+	bool wasEventDefined(std::string name);
+
 	// protected so we can modify in children classes
 	std::string m_text;
 };
