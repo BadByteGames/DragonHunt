@@ -76,13 +76,19 @@ void Event::execute()
 	}
 }
 
-void Event::destroy()
+void Event::destroySequenceOnly()
 {
 	for (size_t i = 0; i < m_sequence.size(); i++) {
 		delete m_sequence[i];
 		m_sequence.erase(m_sequence.begin() + i);
 		i--;
 	}
+}
+
+void Event::destroy()
+{
+	destroySequenceOnly();
+
 	for (auto it : m_sequencePossibilities) {
 		delete it.second;
 	}

@@ -52,8 +52,12 @@ void Adventure::loadFromFile(std::string originFile)
 			std::getline(std::cin, filler);
 		}
 	}
-	if(wasEventDefined("autocall"))
-		this->executeEvent("autocall");
+
+	if(wasEventDefined("autocall","order:first"))
+		this->executeEvent("autocall", "order:first");
+
+	if (wasEventDefined("autocall", "order:second"))
+		this->executeEvent("autocall", "order:second");
 
 	this->destroy();
 }

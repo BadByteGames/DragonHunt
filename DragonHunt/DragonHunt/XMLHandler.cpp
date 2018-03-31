@@ -46,7 +46,13 @@ void XMLHandler::destroy()
 
 	//clean up the events
 	for (auto it : m_events) {
-		it.second.destroy();
+		//see if this event type hasn't been cleaned up yet
+		if (m_wasCleanedYet.find(it.first) != m_wasCleanedYet.end()) {
+			it.second.destroy();
+			m_wasCleanedYet.insert(std::make_pair(it.first, true));
+		}else
+			//otherwise, just destroy the items
+			it.second.destroySequenceOnly();
 	}
 }
 
@@ -119,16 +125,40 @@ int XMLHandler::populateChildren(tinyxml2::XMLElement * elementToParse, bool use
 			//check if that element is an event
 			else if (m_events.find(currentElement->Name()) != m_events.end()) {
 				Logger::logEvent("XMLHandler", "began parsing element " + std::string(currentElement->Name()) + " at line " + std::to_string(currentElement->GetLineNum()));
+				
+				//create the argument macro
+				std::string argumentMacro = "";
+				
+				auto attr = currentElement->FirstAttribute();
+				while (attr != NULL) {
+					argumentMacro += attr->Name() + std::string(":") + attr->Value();
+					attr = attr->Next();
+				}
+
+
 				//check if wasn't defined
-				if (!wasEventDefined(currentElement->Name())) {
+				if (!wasEventDefined(currentElement->Name(),argumentMacro)) {
 					//found an event so just call its sequence builder
 					auto evnt = m_events.find(currentElement->Name());
-					if (evnt->second.parseFromElement(currentElement)) {
-						return 1;
+
+					//if argumentMacro != "", create a new event
+					if (argumentMacro != "") {
+						auto newEvent = Event(evnt->second);
+						
+						if (newEvent.parseFromElement(currentElement)) {
+							return 1;
+						}
+
+						m_events.insert(std::make_pair(currentElement->Name() + argumentMacro,newEvent));
+					}
+					else {
+						if (evnt->second.parseFromElement(currentElement)) {
+							return 1;
+						}
 					}
 
 					//next we add it to the defined events
-					m_eventDefined.insert(std::make_pair(currentElement->Name(), true));
+					m_eventDefined.insert(std::make_pair(currentElement->Name()+argumentMacro, true));
 				}
 				else {
 					std::cout << "An error occurred, please check runtime.log for details" << std::endl;
@@ -182,16 +212,19 @@ void XMLHandler::addEvent(std::string name, Event evnt)
 	m_events.insert(std::make_pair(name, evnt));
 }
 
-void XMLHandler::executeEvent(std::string name)
+void XMLHandler::executeEvent(std::string name, std::string argumentMacro)
 {
-	Logger::logEvent("XMLHandler-Event", "Executing event " + name+".");
-	m_events.find(name)->second.execute();
-	Logger::logEvent("XMLHandler-Event", "Finished executing "+name+".");
+	Logger::logEvent("XMLHandler-Event", "Executing event " + name+argumentMacro);
+	m_events.find(name+argumentMacro)->second.execute();
+	Logger::logEvent("XMLHandler-Event", "Finished executing "+name+argumentMacro);
 }
 
-bool XMLHandler::wasEventDefined(std::string name)
+bool XMLHandler::wasEventDefined(std::string name, std::string argumentMacro)
 {
-	if (m_eventDefined.find(name) != m_eventDefined.end())
+	if (m_eventDefined.find(name) != m_eventDefined.end() && argumentMacro=="")
 		return m_eventDefined.find(name)->second;
+	else if(m_eventDefined.find(name+argumentMacro) != m_eventDefined.end())
+		return m_eventDefined.find(name+argumentMacro)->second;
+
 	return false;
 }

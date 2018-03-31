@@ -31,9 +31,10 @@
 		<print text="You died" />
 	</ondeath>-->
 	<!--A little example test event-->
-	<autocall>
-		<print text="I've been called!"/>
-		<print text="This is great!"/>
-		<print text="Hello word!"/>
+	<autocall order="second">
+		<print text="I've been called second :_("/>
+	</autocall>
+	<autocall order="first">
+		<print text="I've been called first!"/>
 	</autocall>
 </adventure>

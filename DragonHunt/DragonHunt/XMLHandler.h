@@ -59,15 +59,18 @@ private:
 	//name, wasDefined
 	std::unordered_map<std::string, bool> m_eventDefined;
 
+	std::unordered_map<std::string, bool> m_wasCleanedYet;
+
 protected:
 	//creates an event for this xml handler
 	void addEvent(std::string name, Event evnt);
 
 	//runs the specefied event, make sure to check whether it was defined
-	void executeEvent(std::string name);
+	//argument macro has format [attributeName:attributeValue]...
+	void executeEvent(std::string name, std::string argumentMacro="");
 
 	//checks if the user defined that elements
-	bool wasEventDefined(std::string name);
+	bool wasEventDefined(std::string name, std::string argumentMacro = "");
 
 	// protected so we can modify in children classes
 	std::string m_text;

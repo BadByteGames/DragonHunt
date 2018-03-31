@@ -52,6 +52,8 @@ public:
 
 	void execute();
 
+	void destroySequenceOnly();
+
 	void destroy();
 
 private:
