@@ -3,7 +3,6 @@
 #include "Logger.h"
 #include "Adventure.h"
 
-
 Player::Player()
 {
 }
