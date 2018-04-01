@@ -43,8 +43,10 @@ std::string getFileFromSite(std::string address) {
 		hConnect = NULL,
 		hRequest = NULL;
 
+	//ignore these errors, the compile works fine
+
 	// Use WinHttpOpen to obtain a session handle.
-	hSession = WinHttpOpen(L"WinHTTP Example/1.0",
+	hSession = WinHttpOpen(L"DragonHunt/1.0",
 		WINHTTP_ACCESS_TYPE_DEFAULT_PROXY,
 		WINHTTP_NO_PROXY_NAME,
 		WINHTTP_NO_PROXY_BYPASS, 0);
