@@ -55,8 +55,6 @@ std::string getFileFromSite(std::string address) {
 	if (hSession)
 		hConnect = WinHttpConnect(hSession, WwebAddress.c_str(),
 			INTERNET_DEFAULT_HTTPS_PORT, 0);
-	else
-		std::cout << "hSession bad" << std::endl;
 
 	// Create an HTTP request handle.
 	if (hConnect)
@@ -65,8 +63,6 @@ std::string getFileFromSite(std::string address) {
 			NULL, WINHTTP_NO_REFERER,
 			WINHTTP_DEFAULT_ACCEPT_TYPES,
 			WINHTTP_FLAG_SECURE);
-	else
-		std::cout << "hConnect bad" << std::endl;
 
 	// Send a request.
 	if (hRequest)
@@ -74,14 +70,10 @@ std::string getFileFromSite(std::string address) {
 			WINHTTP_NO_ADDITIONAL_HEADERS, 0,
 			WINHTTP_NO_REQUEST_DATA, 0,
 			0, 0);
-	else
-		std::cout << "hRequest bad" << std::endl;
 
 	// End the request.
 	if (bResults)
 		bResults = WinHttpReceiveResponse(hRequest, NULL);
-	else
-		std::cout << "bResults bad" << std::endl;
 
 	std::string outval = "";
 
@@ -134,14 +126,20 @@ std::string getFileFromSite(std::string address) {
 class DefaultDragonHuntCMD : public EasyCmd::CMD {
 public:
 	DefaultDragonHuntCMD() {
-		addOption("https", "https://raw.githubusercontent.com/BadByteGames/DragonHunt/releasecandidate/DragonHunt/DragonHunt/exampleworld.xml");
+		//example: https://raw.githubusercontent.com/BadByteGames/DragonHunt/releasecandidate/DragonHunt/DragonHunt/exampleworld.xml
+		addOption("https", "");
+		addOption("file",  "");
 	}
 	~DefaultDragonHuntCMD() {}
 
 	// Inherited via CMD
 	virtual int execute() override
 	{
-		std::cout << getFileFromSite(getString("https"))<<std::endl;
+		if (getString("file") != "") {
+			//loads xml from file and starts adventure
+			Adventure a;
+			a.loadFromFile(getString("file"));
+		}
 		return 0;
 	}
 };
@@ -171,12 +169,10 @@ int main(int argc, char** argv) {
 	handler.parseCommand(argc, argv);
 	handler.cleanup();
 
-	//load in xml file
-	/*Adventure a;
-	a.loadFromFile("exampleworld.xml");*/
-
 	//get input then quit
 	std::string input = "";
 	std::getline(std::cin, input);
+
+	Logger::logEvent("main", "program terminated");
 	return 0;
 }
