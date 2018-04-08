@@ -130,6 +130,9 @@ int XMLHandler::populateChildren(tinyxml2::XMLElement * elementToParse, bool use
 				std::string argumentMacro = "";
 				
 				auto attr = currentElement->FirstAttribute();
+				if (attr != NULL) {
+					argumentMacro += "%";
+				}
 				while (attr != NULL) {
 					argumentMacro += attr->Name() + std::string(":") + attr->Value();
 					attr = attr->Next();
@@ -215,7 +218,12 @@ void XMLHandler::addEvent(std::string name, Event evnt)
 void XMLHandler::executeEvent(std::string name, std::string argumentMacro)
 {
 	Logger::logEvent("XMLHandler-Event", "Executing event " + name+argumentMacro);
-	m_events.find(name+argumentMacro)->second.execute();
+	if (argumentMacro != "") {
+		m_events.find(name + "%" + argumentMacro)->second.execute();
+	}
+	else {
+		m_events.find(name)->second.execute();
+	}
 	Logger::logEvent("XMLHandler-Event", "Finished executing "+name+argumentMacro);
 }
 
@@ -223,8 +231,8 @@ bool XMLHandler::wasEventDefined(std::string name, std::string argumentMacro)
 {
 	if (m_eventDefined.find(name) != m_eventDefined.end() && argumentMacro=="")
 		return m_eventDefined.find(name)->second;
-	else if(m_eventDefined.find(name+argumentMacro) != m_eventDefined.end())
-		return m_eventDefined.find(name+argumentMacro)->second;
+	else if(m_eventDefined.find(name+"%"+argumentMacro) != m_eventDefined.end())
+		return m_eventDefined.find(name+"%"+argumentMacro)->second;
 
 	return false;
 }

@@ -120,6 +120,7 @@ void Adventure::parserLoop()
 			else if (results[0].value == "go") {
 				if (results.size() >= 2 && !(m_currentLocation->wasEventDefined("godirection", "direction:" + results[1].value))) {
 					std::cout << "I only understood you as far as wanting to go somewhere." << std::endl;
+					Logger::logEvent("Adventure", "Unknown direction \"" + results[1].value + "\"");
 				}
 				else if(results.size() >= 2) {
 					m_currentLocation->executeEvent("godirection", "direction:" + results[1].value);

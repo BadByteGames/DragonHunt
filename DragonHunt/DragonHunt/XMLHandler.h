@@ -33,7 +33,7 @@ public:
 	virtual void onChildParsed(std::string name, XMLHandler * child) {};
 
 	//runs the specefied event, make sure to check whether it was defined
-	//argument macro has format [attributeName:attributeValue]...
+	//argument macro has format %[attributeName:attributeValue]...
 	void executeEvent(std::string name, std::string argumentMacro = "");
 
 	//checks if the user defined that elements
