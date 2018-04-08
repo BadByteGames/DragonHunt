@@ -32,6 +32,13 @@ public:
 	//passes a pointer to XMLHandler which you WILL need to make a copy of because of class definition constrictions
 	virtual void onChildParsed(std::string name, XMLHandler * child) {};
 
+	//runs the specefied event, make sure to check whether it was defined
+	//argument macro has format [attributeName:attributeValue]...
+	void executeEvent(std::string name, std::string argumentMacro = "");
+
+	//checks if the user defined that elements
+	bool wasEventDefined(std::string name, std::string argumentMacro = "");
+
 private:
 	//used to parse attributes
 	int populateAttributes(tinyxml2::XMLElement* elementToParse);
@@ -64,13 +71,6 @@ private:
 protected:
 	//creates an event for this xml handler
 	void addEvent(std::string name, Event evnt);
-
-	//runs the specefied event, make sure to check whether it was defined
-	//argument macro has format [attributeName:attributeValue]...
-	void executeEvent(std::string name, std::string argumentMacro="");
-
-	//checks if the user defined that elements
-	bool wasEventDefined(std::string name, std::string argumentMacro = "");
 
 	// protected so we can modify in children classes
 	std::string m_text;

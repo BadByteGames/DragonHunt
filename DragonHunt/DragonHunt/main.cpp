@@ -139,6 +139,7 @@ public:
 			//loads xml from file and starts adventure
 			Adventure a;
 			a.loadFromFile(getString("file"));
+			a.destroy();
 		}
 		return 0;
 	}
@@ -168,10 +169,6 @@ int main(int argc, char** argv) {
 
 	handler.parseCommand(argc, argv);
 	handler.cleanup();
-
-	//get input then quit
-	std::string input = "";
-	std::getline(std::cin, input);
 
 	Logger::logEvent("main", "program terminated");
 	return 0;

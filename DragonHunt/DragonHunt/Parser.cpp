@@ -1,4 +1,7 @@
 #include "Parser.h"
+
+#include "Logger.h"
+
 #include <sstream>
 #include <iterator>
 #include <iostream>
@@ -12,19 +15,23 @@ Parser::~Parser()
 {
 }
 
-std::vector<TOKENDATA> Parser::parse(std::string toParse)
+std::vector<TOKENDATA> Parser::parse(std::string toParse, const std::vector<TOKENPAIR>& possibleTokens)
 {
 	//clears m_keywords
 	m_keywords.clear();
 	//add all keywords to the vector
 	//push_back adds new items to the vector
-	m_keywords.push_back(TOKENPAIR("go", TOKEN::GO));
-	m_keywords.push_back(TOKENPAIR("pick up", TOKEN::PICKUP));
-	m_keywords.push_back(TOKENPAIR("drop", TOKEN::DROP));
-	m_keywords.push_back(TOKENPAIR("take", TOKEN::TAKE));
-	m_keywords.push_back(TOKENPAIR("push", TOKEN::PUSH));
-	m_keywords.push_back(TOKENPAIR("help", TOKEN::HELP));
+	m_keywords.push_back(TOKENPAIR("go", TOKEN::VERB));
+	m_keywords.push_back(TOKENPAIR("pick up", TOKEN::VERB));
+	m_keywords.push_back(TOKENPAIR("drop", TOKEN::VERB));
+	m_keywords.push_back(TOKENPAIR("take", TOKEN::VERB));
+	m_keywords.push_back(TOKENPAIR("push", TOKEN::VERB));
+	m_keywords.push_back(TOKENPAIR("help", TOKEN::VERB));
 	
+	//add all engine passed tokens
+	for (auto t : possibleTokens) {
+		m_keywords.push_back(t);
+	}
 
 	std::vector<TOKENDATA> tokens;
 	std::istringstream iss(toParse);
@@ -34,11 +41,15 @@ std::vector<TOKENDATA> Parser::parse(std::string toParse)
 		std::istream_iterator<std::string>{} };
 
 	//loops through tokens to find keywords
-	for (int i = 0; i < words.size(); i++) {
+	for (unsigned int i = 0; i < words.size(); i++) {
 		for (auto token : m_keywords) {
 			std::string str = foundTokenInString(words, i, token);
 			if (str!="")
 				tokens.push_back(TOKENDATA(token.result, str));
+		}
+		if (tokens.size() != i + 1) {
+			//the token wasn't found
+			tokens.push_back(TOKENDATA(TOKEN::UNKNOWN, words[i]));
 		}
 	}
 
@@ -65,7 +76,7 @@ std::string Parser::foundTokenInString(std::vector<std::string> words, int start
 	//check if we've reached the end of the array
 	if (index+1== words.size())
 		//check if the token was complete
-		if (len = 0)
+		if (len == 0)
 			return returnvalue;
 		else
 			return "";

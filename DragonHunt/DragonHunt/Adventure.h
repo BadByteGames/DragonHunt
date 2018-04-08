@@ -42,11 +42,15 @@ public:
 
 	virtual void onChildParsed(std::string name, XMLHandler * child);
 private:
+	void parserLoop();
+
 
 	XMLDocument m_doc;
 	std::vector<std::string> m_lines;
 
 	std::unordered_map<std::string, Location> m_locations;
+
+	Location* m_currentLocation;
 
 	Player m_player;
 };

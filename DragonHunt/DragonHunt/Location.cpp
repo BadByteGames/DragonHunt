@@ -7,6 +7,9 @@ Location::Location()
 	this->addChild("description", new LocationDescription(), XMLChildFlag::REQUIRED | XMLChildFlag::USESTEXT);
 
 	this->addAttribute("name", true);
+
+	Event goDirection;
+	this->addEvent("godirection", goDirection);
 }
 
 

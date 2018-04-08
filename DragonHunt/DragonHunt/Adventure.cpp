@@ -4,6 +4,7 @@
 #include "Logger.h"
 #include "Location.h"
 #include "CCHandler.h"
+#include "Parser.h"
 
 Adventure::Adventure():m_player()
 {
@@ -36,6 +37,7 @@ void Adventure::loadFromFile(std::string originFile)
 	//create events
 	Event autoCall;
 	Event trigger;
+	
 
 	//make sure to add trigger sequence item
 	autoCall.addSequencePossibility("trigger", new Trigger(&m_player, this));
@@ -43,6 +45,7 @@ void Adventure::loadFromFile(std::string originFile)
 
 	this->addEvent("autocall", autoCall);
 	this->addEvent("trigger", trigger);
+	
 
 	if (this->parseFromElement(m_doc.FirstChildElement())) {
 		Logger::logEvent("Adventure", "Adventure parsing failed");
@@ -60,10 +63,12 @@ void Adventure::loadFromFile(std::string originFile)
 		}
 	}
 
+	m_currentLocation = &m_locations.find(getAttribute("start"))->second;
+	
 	if(wasEventDefined("autocall"))
 		this->executeEvent("autocall");
 
-	this->destroy();
+	parserLoop();
 }
 
 void Adventure::callTrigger(std::string name)
@@ -84,6 +89,44 @@ void Adventure::onChildParsed(std::string name, XMLHandler * child)
 		//create a location object then push back
 		Location l = (Location)*((Location*)child);
 		m_locations.insert(std::make_pair(l.getAttribute("name"), l));
+	}
+}
+
+void Adventure::parserLoop()
+{
+	std::cout << "Please type \"quit\" in order to deallocate memory when quitting" << std::endl;
+	bool shouldContinue = true;
+	while (shouldContinue) {
+		std::string input = "";
+		std::cout << ">";
+		std::getline(std::cin, input);
+		Logger::logEvent("user", ">"+input);
+		
+		//check wheter user wants to quit
+		if (input == "quit" || input == "exit") {
+			shouldContinue = false;
+		}
+		else {
+			//otherwise, parse the data
+
+			//create extra tokens based off scene
+			std::vector<TOKENPAIR> extraTokens;
+
+			Parser p;
+			auto results = p.parse(input, extraTokens);
+			if (results.size() >= 1 && results[0].type != TOKEN::VERB) {
+				std::cout << "I don't recognize that verb." << std::endl;
+			}
+			else if (results[0].value == "go") {
+				if (results.size() >= 2 && !(m_currentLocation->wasEventDefined("godirection", "direction:" + results[1].value))) {
+					std::cout << "I only understood you as far as wanting to go somewhere." << std::endl;
+				}
+				else if(results.size() >= 2) {
+					m_currentLocation->executeEvent("godirection", "direction:" + results[1].value);
+				}
+			}
+		}
+
 	}
 }
 

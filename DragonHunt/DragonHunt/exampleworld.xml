@@ -22,6 +22,9 @@
 				<print text="A pair of grass clippers with green handles. There is some rust on it but is still usable."/>
 			</inspect>
 		</item>-->
+		<godirection direction="north">
+			<print text="hy"/>
+		</godirection>
 	</location>
 	<!--<useitem itemname="clippers">
 		<print text="You cut yourself with the clippers." />
@@ -31,6 +34,7 @@
 		<print text="You died" />
 	</ondeath>-->
 	<!--A little example test event-->
+	
 	<autocall>
 		<print text="I've been called!"/>
 		<trigger triggername="testtrigger"/>
