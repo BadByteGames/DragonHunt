@@ -26,12 +26,16 @@ void Adventure::loadFromFile(std::string originFile)
 		return;
 	}
 
+	m_player.init(this);
+
 	//add attribute name, version, and start
 	this->addAttribute("name", true);
 	this->addAttribute("version", true);
 	this->addAttribute("start", true);
 
-	this->addChild("location", new Location(), XMLChildFlag::MULTIPLE | XMLChildFlag::REQUIRED);
+	auto l = new Location();
+	l->setupSequences(&m_player);
+	this->addChild("location", l, XMLChildFlag::MULTIPLE | XMLChildFlag::REQUIRED);
 	this->addChild("cc", new CCHandler());
 
 	//create events
@@ -40,15 +44,17 @@ void Adventure::loadFromFile(std::string originFile)
 	
 
 	//make sure to add trigger sequence item
-	autoCall.addSequencePossibility("trigger", new Trigger(&m_player, this));
-	trigger.addSequencePossibility("trigger", new Trigger(&m_player, this));
+	m_player.addSequenceItems(&autoCall);
+	m_player.addSequenceItems(&trigger);
 
-	this->addEvent("autocall", autoCall);
+	this->addEvent("begin", autoCall);
 	this->addEvent("trigger", trigger);
 	
 
 	if (this->parseFromElement(m_doc.FirstChildElement())) {
 		Logger::logEvent("Adventure", "Adventure parsing failed");
+		std::string a;
+		std::getline(std::cin, a);
 	}
 	else {
 		//print out cc
@@ -61,14 +67,15 @@ void Adventure::loadFromFile(std::string originFile)
 			std::string filler;
 			std::getline(std::cin, filler);
 		}
+
+		//begin game
+		m_currentLocation = &m_locations.find(getAttribute("start"))->second;
+
+		if (wasEventDefined("begin"))
+			this->executeEvent("begin");
+
+		parserLoop();
 	}
-
-	m_currentLocation = &m_locations.find(getAttribute("start"))->second;
-	
-	if(wasEventDefined("autocall"))
-		this->executeEvent("autocall");
-
-	parserLoop();
 }
 
 void Adventure::callTrigger(std::string name)
@@ -106,7 +113,7 @@ void Adventure::parserLoop()
 		if (input == "quit" || input == "exit") {
 			shouldContinue = false;
 		}
-		else {
+		else if(input!=""){
 			//otherwise, parse the data
 
 			//create extra tokens based off scene
@@ -131,22 +138,3 @@ void Adventure::parserLoop()
 	}
 }
 
-Trigger::Trigger(Player* player,Adventure* adventure):m_player(player),m_adv(adventure)
-{
-	requireArgument("triggername");
-}
-
-Trigger::~Trigger()
-{
-}
-
-SequenceItem * Trigger::create()
-{
-	return new Trigger(m_player, m_adv);
-}
-
-int Trigger::onCall()
-{
-	m_player->triggerEvent(getArgument("triggername"),m_adv);
-	return 0;
-}

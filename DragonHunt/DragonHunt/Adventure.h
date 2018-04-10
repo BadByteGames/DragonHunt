@@ -17,18 +17,7 @@ using tinyxml2::XMLComment;
 using tinyxml2::XMLElement;
 using tinyxml2::XMLNode;
 
-class Trigger : public SequenceItem {
-public:
-	Trigger(Player* player, Adventure* adv);
-	~Trigger();
 
-	virtual SequenceItem* create() override;
-	virtual int onCall() override;
-
-private:
-	Player * m_player;
-	Adventure * m_adv;
-};
 
 class Adventure : public XMLHandler
 {

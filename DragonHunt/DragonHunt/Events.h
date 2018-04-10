@@ -32,15 +32,6 @@ private:
 	std::unordered_map<std::string, std::string> m_arguments;
 };
 
-class Print : public SequenceItem{
-public:
-	Print();
-	~Print();
-
-	virtual SequenceItem* create() override;
-	virtual int onCall() override;
-};
-
 //events will use their own XML handler rather than the normal one
 class Event
 {

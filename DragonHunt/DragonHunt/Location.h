@@ -2,6 +2,8 @@
 
 #include "XMLHandler.h"
 
+class Player;
+
 class LocationItemDesc : public XMLHandler {
 public:
 	LocationItemDesc();
@@ -26,6 +28,8 @@ public:
 	~Location();
 
 	virtual void onChildParsed(std::string name, XMLHandler * child);
+
+	void setupSequences(Player* player);
 
 	std::string m_description;
 };

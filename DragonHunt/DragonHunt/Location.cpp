@@ -1,5 +1,7 @@
 #include "Location.h"
 
+#include "Player.h"
+
 #include <iostream>
 
 Location::Location()
@@ -8,8 +10,6 @@ Location::Location()
 
 	this->addAttribute("name", true);
 
-	Event goDirection;
-	this->addEvent("godirection", goDirection);
 }
 
 
@@ -24,6 +24,15 @@ void Location::onChildParsed(std::string name, XMLHandler * child)
 		m_description = child->getText();
 	}
 	
+}
+
+void Location::setupSequences(Player * player)
+{
+	Event goDirection;
+	player->addSequenceItems(&goDirection);
+
+	this->addEvent("godirection", goDirection);
+
 }
 
 LocationDescription::LocationDescription()

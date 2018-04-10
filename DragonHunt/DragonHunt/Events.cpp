@@ -7,8 +7,6 @@
 
 Event::Event()
 {
-	//add all the basic sequence items
-	m_sequencePossibilities.insert(std::make_pair("print", new Print()));
 }
 
 
@@ -126,26 +124,4 @@ void SequenceItem::copyArgs(SequenceItem * other)
 	for (auto it : other->m_arguments) {
 		this->m_arguments.insert(std::make_pair(it.first, it.second));
 	}
-}
-
-Print::Print()
-{
-	requireArgument("text");
-}
-
-Print::~Print()
-{
-}
-
-SequenceItem * Print::create()
-{
-	Print* p = new Print();
-	p->copyArgs(this);
-	return p;
-}
-
-int Print::onCall()
-{
-	std::cout << this->getArgument("text") << std::endl;
-	return 0;
 }

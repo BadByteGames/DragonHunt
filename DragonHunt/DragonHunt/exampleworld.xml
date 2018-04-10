@@ -23,7 +23,16 @@
 			</inspect>
 		</item>-->
 		<godirection direction="north">
-			<print text="hy"/>
+			<print text="went north"/>
+		</godirection>
+		<godirection direction="west">
+			<print text="went west"/>
+		</godirection>
+		<godirection direction="south">
+			<print text="went south"/>
+		</godirection>
+		<godirection direction="east">
+			<print text="went east"/>
 		</godirection>
 	</location>
 	<!--<useitem itemname="clippers">
@@ -35,12 +44,12 @@
 	</ondeath>-->
 	<!--A little example test event-->
 	
-	<autocall>
+	<begin>
 		<print text="I've been called!"/>
 		<trigger triggername="testtrigger"/>
 		<print text="Let's call that trigger again"/>
 		<trigger triggername="testtrigger"/>
-	</autocall>
+	</begin>
 	<trigger triggername="testtrigger">
 		<print text="trigger called"/>
 	</trigger>
