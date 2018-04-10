@@ -49,8 +49,10 @@
 	
 	<begin>
 		<print text="I've been called!"/>
+		<setmacro name="test" value="test"/>
 		<trigger triggername="testtrigger"/>
 		<print text="Let's call that trigger again"/>
+		<setmacro name="test" value="meme"/>
 		<trigger triggername="testtrigger"/>
 	</begin>
 	<trigger triggername="testtrigger">

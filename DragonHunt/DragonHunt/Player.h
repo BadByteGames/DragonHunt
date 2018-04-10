@@ -32,6 +32,18 @@ private:
 	Player * m_player;
 };
 
+class SetMacro : public SequenceItem {
+public:
+	SetMacro(Player* player);
+	~SetMacro();
+
+	virtual SequenceItem* create() override;
+	virtual int onCall() override;
+
+private:
+	Player * m_player;
+};
+
 class Player
 {
 public:

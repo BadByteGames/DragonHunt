@@ -43,7 +43,7 @@ SequenceItem * Print::create()
 int Print::onCall()
 {
 	std::cout << m_player->evaluateMacros(this->getArgument("text")) << std::endl;
-	Logger::logEvent("print", this->getArgument("text"));
+	Logger::logEvent("print", m_player->evaluateMacros(this->getArgument("text")));
 	return 0;
 }
 
@@ -104,6 +104,7 @@ void Player::addSequenceItems(Event * evnt)
 {
 	evnt->addSequencePossibility("print", new Print(this));
 	evnt->addSequencePossibility("trigger", new Trigger(this));
+	evnt->addSequencePossibility("setmacro", new SetMacro(this));
 }
 
 void Player::setMacro(std::string name, std::string value)
@@ -137,4 +138,25 @@ std::string Player::evaluateMacros(std::string original)
 	}
 
 	return returnValue;
+}
+
+SetMacro::SetMacro(Player * player):m_player(player)
+{
+	requireArgument("name");
+	requireArgument("value");
+}
+
+SetMacro::~SetMacro()
+{
+}
+
+SequenceItem * SetMacro::create()
+{
+	return new SetMacro(m_player);
+}
+
+int SetMacro::onCall()
+{
+	m_player->setMacro(getArgument("name"), getArgument("value"));
+	return 0;
 }
