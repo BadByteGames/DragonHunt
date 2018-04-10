@@ -4,14 +4,6 @@
 
 class Player;
 
-class LocationItemDesc : public XMLHandler {
-public:
-	LocationItemDesc();
-	~LocationItemDesc();
-
-	virtual void onChildParsed(std::string name, XMLHandler * child);
-};
-
 class LocationDescription : public XMLHandler {
 
 public:

@@ -40,7 +40,6 @@ void Location::setupSequences(Player * player)
 
 LocationDescription::LocationDescription()
 {	
-	this->addChild("itemdesc", new LocationItemDesc(), XMLChildFlag::MULTIPLE | XMLChildFlag::REQUIRED);
 }
 
 LocationDescription::~LocationDescription()
@@ -53,18 +52,4 @@ void LocationDescription::onChildParsed(std::string name, XMLHandler * child)
 	if (name == "itemdesc") {
 		m_text += "%item:" + child->getAttribute("name") + "%";
 	}
-}
-
-LocationItemDesc::LocationItemDesc()
-{
-	this->addAttribute("name", true);
-}
-
-LocationItemDesc::~LocationItemDesc()
-{
-}
-
-void LocationItemDesc::onChildParsed(std::string name, XMLHandler * child)
-{
-	//can't have children so do nothing
 }
