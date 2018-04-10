@@ -69,7 +69,10 @@ void Adventure::loadFromFile(std::string originFile)
 		}
 
 		//begin game
-		m_currentLocation = &m_locations.find(getAttribute("start"))->second;
+		if (m_locations.find(getAttribute("start")) != m_locations.end()) {
+			auto l_pair = m_locations.find(getAttribute("start"));
+			setCurrentLocation(l_pair->first, &l_pair->second);
+		}
 
 		if (wasEventDefined("begin"))
 			this->executeEvent("begin");
@@ -82,6 +85,10 @@ void Adventure::callTrigger(std::string name)
 {
 	if (wasEventDefined("trigger", "triggername:" + name)) {
 		executeEvent("trigger", "triggername:" + name);
+	}
+	//attempt to call it in the current location
+	if (m_currentLocation->wasEventDefined("trigger", "triggername:" + name)) {
+		m_currentLocation->executeEvent("trigger", "triggername:" + name);
 	}
 }
 
@@ -132,9 +139,20 @@ void Adventure::parserLoop()
 				else if(results.size() >= 2) {
 					m_currentLocation->executeEvent("godirection", "direction:" + results[1].value);
 				}
+				else {
+					std::cout << "I only understood you as far as wanting to go somewhere." << std::endl;
+					Logger::logEvent("Adventure", "Direction not specefied");
+				}
 			}
 		}
 
 	}
+}
+
+void Adventure::setCurrentLocation(std::string name, Location * location)
+{
+	std::cout << "\n" <<name<<"\n" << std::endl;
+	std::cout << location->m_description << "\n"  << std::endl;
+	m_currentLocation = location;
 }
 

@@ -24,6 +24,7 @@
 		</item>-->
 		<godirection direction="north">
 			<print text="went north"/>
+			<trigger triggername="testtrigger"/>
 		</godirection>
 		<godirection direction="west">
 			<print text="went west"/>
@@ -34,6 +35,9 @@
 		<godirection direction="east">
 			<print text="went east"/>
 		</godirection>
+		<trigger triggername="testtrigger">
+		<print text="This is from location"/>
+	</trigger>
 	</location>
 	<!--<useitem itemname="clippers">
 		<print text="You cut yourself with the clippers." />

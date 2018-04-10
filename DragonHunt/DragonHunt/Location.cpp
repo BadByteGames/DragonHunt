@@ -29,10 +29,13 @@ void Location::onChildParsed(std::string name, XMLHandler * child)
 void Location::setupSequences(Player * player)
 {
 	Event goDirection;
+	Event trigger;
+
 	player->addSequenceItems(&goDirection);
+	player->addSequenceItems(&trigger);
 
 	this->addEvent("godirection", goDirection);
-
+	this->addEvent("trigger", trigger);
 }
 
 LocationDescription::LocationDescription()

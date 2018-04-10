@@ -21,6 +21,7 @@ using tinyxml2::XMLNode;
 
 class Adventure : public XMLHandler
 {
+friend class Player;
 public:
 	Adventure();
 	~Adventure();
@@ -33,6 +34,7 @@ public:
 private:
 	void parserLoop();
 
+	void setCurrentLocation(std::string name, Location* location);
 
 	XMLDocument m_doc;
 	std::vector<std::string> m_lines;
