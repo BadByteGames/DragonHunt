@@ -130,6 +130,7 @@ void Adventure::parserLoop()
 			auto results = p.parse(input, extraTokens);
 			if (results.size() >= 1 && results[0].type != TOKEN::VERB) {
 				std::cout << "I don't recognize that verb." << std::endl;
+				Logger::logEvent("Adventure", "Unknown verb "+ results[0].value);
 			}
 			else if (results[0].value == "go") {
 				if (results.size() >= 2 && !(m_currentLocation->wasEventDefined("godirection", "direction:" + results[1].value))) {

@@ -22,11 +22,14 @@ private:
 
 class Print : public SequenceItem {
 public:
-	Print();
+	Print(Player* player);
 	~Print();
 
 	virtual SequenceItem* create() override;
 	virtual int onCall() override;
+
+private:
+	Player * m_player;
 };
 
 class Player
@@ -46,10 +49,18 @@ public:
 	//adds all default sequenceitem
 	void addSequenceItems(Event* evnt);
 
+	void setMacro(std::string name, std::string value);
+
+	std::string evaluateMacros(std::string original);
+
 private:
 	//map of all the GLOBAL triggers (not prefixed by !)
 	//name, wasTriggered
 	std::unordered_map<std::string, bool> m_triggers;
+
+	//a map storing the values of all the macros
+	//name, value
+	std::unordered_map<std::string, std::string> m_macros;
 
 	Adventure* m_adv;
 };

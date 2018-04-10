@@ -5,10 +5,9 @@
 		<li>Originally written by Robert White (armedturret).</li>
 	</cc>
 	<location name="clearing">
-		<description>A plain green clearing. The grass is short as if cut recently.</description>
+		<description>A plain green grassy clearing. The grass is short as if cut recently.</description>
 		<!--<item name="clippers">
 			<description>A pair of grass clippers with green handles. There is some rust on it but is still usable.</description>
-			<worldescription>A pair of clippers lies in the grass.</worldescription>
 			<pickup>
 				<print text="You pick up the clippers."/>
 			</pickup>
@@ -36,7 +35,7 @@
 			<print text="went east"/>
 		</godirection>
 		<trigger triggername="testtrigger">
-		<print text="This is from location"/>
+		<print text="This is a %test% call"/>
 	</trigger>
 	</location>
 	<!--<useitem itemname="clippers">

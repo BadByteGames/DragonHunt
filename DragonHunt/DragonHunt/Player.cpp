@@ -24,7 +24,7 @@ int Trigger::onCall()
 	return 0;
 }
 
-Print::Print()
+Print::Print(Player* player) :m_player(player)
 {
 	requireArgument("text");
 }
@@ -35,14 +35,15 @@ Print::~Print()
 
 SequenceItem * Print::create()
 {
-	Print* p = new Print();
+	Print* p = new Print(m_player);
 	p->copyArgs(this);
 	return p;
 }
 
 int Print::onCall()
 {
-	std::cout << this->getArgument("text") << std::endl;
+	std::cout << m_player->evaluateMacros(this->getArgument("text")) << std::endl;
+	Logger::logEvent("print", this->getArgument("text"));
 	return 0;
 }
 
@@ -101,6 +102,39 @@ bool Player::wasTriggered(std::string name)
 
 void Player::addSequenceItems(Event * evnt)
 {
-	evnt->addSequencePossibility("print", new Print());
+	evnt->addSequencePossibility("print", new Print(this));
 	evnt->addSequencePossibility("trigger", new Trigger(this));
+}
+
+void Player::setMacro(std::string name, std::string value)
+{
+	//proper macro name
+	std::string macroName = "%" + name + "%";
+	
+	//check if that macro already exists
+	auto macro = m_macros.find(macroName);
+	if (macro != m_macros.end()) {
+		//macro already exists so change its value
+		macro->second = value;
+	}
+	else {
+		//insert a new macro
+		m_macros.insert(std::make_pair(macroName, value));
+	}
+}
+
+std::string Player::evaluateMacros(std::string original)
+{
+	std::string returnValue = original;
+
+	//loop through replacing macros
+	for (auto macro : m_macros) {
+		//find macro in the returnValue
+		size_t location = returnValue.find(macro.first);
+		if (location != returnValue.npos) {
+			returnValue.replace(location, macro.first.length(), macro.second);
+		}
+	}
+
+	return returnValue;
 }
