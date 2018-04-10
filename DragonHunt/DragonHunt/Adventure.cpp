@@ -152,8 +152,8 @@ void Adventure::parserLoop()
 
 void Adventure::setCurrentLocation(std::string name, Location * location)
 {
-	std::cout << "\n" <<name<<"\n" << std::endl;
-	std::cout << location->m_description << "\n"  << std::endl;
+	std::cout << "\n" <<m_player.evaluateMacros(name)<<"\n" << std::endl;
+	std::cout << m_player.evaluateMacros(location->m_description) << "\n"  << std::endl;
 	m_currentLocation = location;
 }
 
