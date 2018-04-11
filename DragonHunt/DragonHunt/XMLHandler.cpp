@@ -52,7 +52,7 @@ void XMLHandler::destroy()
 			m_wasCleanedYet.insert(std::make_pair(it.first, true));
 		}else
 			//otherwise, just destroy the items
-			it.second.destroySequenceOnly();
+			it.second.destroyStatementsOnly();
 	}
 }
 

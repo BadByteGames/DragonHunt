@@ -25,11 +25,11 @@ int Event::parseFromElement(tinyxml2::XMLElement* rootNode)
 		else if (rootChild->ToElement() != NULL) {
 			auto* e = rootChild->ToElement();
 			//first check if that element is allowed
-			auto it = m_sequencePossibilities.find(e->Name());
-			if (it != m_sequencePossibilities.end()) {
+			auto it = m_statementPossibilities.find(e->Name());
+			if (it != m_statementPossibilities.end()) {
 				//found it
 				//create a copy
-				SequenceItem* si = it->second->create();
+				Statement* si = it->second->create();
 				
 				Logger::logEvent("Event", "Creating sequence item "+it->first+".");
 
@@ -63,20 +63,24 @@ int Event::parseFromElement(tinyxml2::XMLElement* rootNode)
 	return 0;
 }
 
-void Event::addSequencePossibility(std::string name, SequenceItem * si)
+void Event::addStatementPossibility(std::string name, Statement * si)
 {
-	m_sequencePossibilities.insert(std::make_pair(name, si));
+	m_statementPossibilities.insert(std::make_pair(name, si));
+}
+
+void Event::addControlGroup(std::string name, ControlGroup * controlGroup, bool addNotCounterPart)
+{
 }
 
 void Event::execute()
 {
 	for (size_t i = 0; i < m_sequence.size(); i++) {
-		Logger::logEvent("Event", "Running sequence item "+std::to_string(i));
-		m_sequence[i]->onCall();
+		Logger::logEvent("Event", "Running statement "+std::to_string(i));
+		m_sequence[i]->execute();
 	}
 }
 
-void Event::destroySequenceOnly()
+void Event::destroyStatementsOnly()
 {
 	for (size_t i = 0; i < m_sequence.size(); i++) {
 		delete m_sequence[i];
@@ -87,9 +91,9 @@ void Event::destroySequenceOnly()
 
 void Event::destroy()
 {
-	destroySequenceOnly();
+	destroyStatementsOnly();
 
-	for (auto it : m_sequencePossibilities) {
+	for (auto it : m_statementPossibilities) {
 		delete it.second;
 	}
 }
@@ -102,23 +106,36 @@ SequenceItem::~SequenceItem()
 {
 }
 
-void SequenceItem::requireArgument(std::string name)
+int SequenceItem::execute()
+{
+	return onCall();
+}
+
+ControlGroup::ControlGroup()
+{
+}
+
+ControlGroup::~ControlGroup()
+{
+}
+
+Statement::Statement()
+{
+}
+
+Statement::~Statement()
+{
+}
+
+void Statement::requireArgument(std::string name)
 {
 	m_requiredArgs.insert(std::make_pair(name, true));
 }
 
-std::string SequenceItem::getArgument(std::string name)
+std::string Statement::getArgument(std::string name)
 {
 	auto it = m_arguments.find(name);
 	if (it != m_arguments.end())
 		return it->second;
 	return NULL;
-}
-
-void SequenceItem::copyArgs(SequenceItem * other)
-{
-	this->m_arguments.clear();
-	for (auto it : other->m_arguments) {
-		this->m_arguments.insert(std::make_pair(it.first, it.second));
-	}
 }

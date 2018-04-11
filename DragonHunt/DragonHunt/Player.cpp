@@ -36,7 +36,6 @@ Print::~Print()
 SequenceItem * Print::create()
 {
 	Print* p = new Print(m_player);
-	p->copyArgs(this);
 	return p;
 }
 
@@ -102,10 +101,10 @@ bool Player::wasTriggered(std::string name)
 
 void Player::addSequenceItems(Event * evnt)
 {
-	evnt->addSequencePossibility("print", new Print(this));
-	evnt->addSequencePossibility("trigger", new Trigger(this));
-	evnt->addSequencePossibility("setmacro", new SetMacro(this));
-	evnt->addSequencePossibility("gotolocation", new GoToLocation(this));
+	evnt->addStatementPossibility("print", new Print(this));
+	evnt->addStatementPossibility("trigger", new Trigger(this));
+	evnt->addStatementPossibility("setmacro", new SetMacro(this));
+	evnt->addStatementPossibility("gotolocation", new GoToLocation(this));
 }
 
 void Player::setMacro(std::string name, std::string value)
