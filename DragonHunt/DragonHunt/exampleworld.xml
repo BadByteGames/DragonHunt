@@ -21,15 +21,6 @@
 				<print text="A pair of grass clippers with green handles. There is some rust on it but is still usable."/>
 			</inspect>
 		</item>-->
-		<godirection direction="south">
-			<gotolocation destination="Place"/>
-		</godirection>
-	</location>
-	<location name="Place">
-		<description>Another place.</description>
-		<godirection direction="north">
-			<gotolocation destination="Clearing"/>
-		</godirection>
 	</location>
 	<!--<useitem itemname="clippers">
 		<print text="You cut yourself with the clippers." />

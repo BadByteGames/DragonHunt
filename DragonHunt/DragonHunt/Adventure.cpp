@@ -57,17 +57,6 @@ void Adventure::loadFromFile(std::string originFile)
 		std::getline(std::cin, a);
 	}
 	else {
-		//print out cc
-		for (auto li : m_lines) {
-			Logger::logEvent("cc", li);
-			std::cout << li << std::endl;
-		}
-		if (m_lines.size() > 0) {
-			std::cout << "By pressing ENTER you accept this license and acknowledge reading it." << std::endl;
-			std::string filler;
-			std::getline(std::cin, filler);
-		}
-
 		//begin game
 		if (m_locations.find(getAttribute("start")) != m_locations.end()) {
 			auto l_pair = m_locations.find(getAttribute("start"));
@@ -80,6 +69,17 @@ void Adventure::loadFromFile(std::string originFile)
 			return;
 		}
 
+		//print out cc
+		for (auto li : m_lines) {
+			Logger::logEvent("cc", li);
+			std::cout << li << std::endl;
+		}
+		if (m_lines.size() > 0) {
+			std::cout << "By pressing ENTER you accept this license and acknowledge reading it." << std::endl;
+			std::string filler;
+			std::getline(std::cin, filler);
+		}
+		
 		if (wasEventDefined("begin"))
 			this->executeEvent("begin");
 
