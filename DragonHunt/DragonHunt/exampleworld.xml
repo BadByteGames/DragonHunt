@@ -29,4 +29,19 @@
 	<ondeath>
 		<print text="You died" />
 	</ondeath>-->
+	<begin>
+		<print text="testp1"/>
+		<trigger triggername="testcall"/>
+		<print text="testp2"/>
+		<trigger triggername="test"/>
+		<trigger triggername="testcall"/>
+	</begin>
+	<trigger triggername="testcall">
+		<triggered triggername="test">
+			<print text="test has been triggered"/>
+		</triggered>
+		<triggered triggername="test" not="yes">
+			<print text="test has not been triggered"/>
+		</triggered>
+	</trigger>
 </adventure>

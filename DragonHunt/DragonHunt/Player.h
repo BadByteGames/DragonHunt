@@ -56,6 +56,18 @@ private:
 	Player * m_player;
 };
 
+class Triggered : public ControlGroup {
+public:
+	Triggered(Player* player);
+	~Triggered();
+	
+	virtual Statement* create() override;
+	virtual bool isTrue() override;
+
+private:
+	Player * m_player;
+};
+
 class Player
 {
 public:

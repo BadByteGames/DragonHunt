@@ -15,6 +15,14 @@ public:
 
 	virtual int execute() { return 0; };
 
+	virtual void extraParsing(tinyxml2::XMLElement* ele, std::unordered_map<std::string, Statement*> m_statementPossibilities) {}
+
+	virtual void destroy() {}
+
+	std::unordered_map<std::string, bool> getRequiredArguments() const { return m_requiredArgs; }
+
+	std::unordered_map<std::string, std::string>* getArguments() { return &m_arguments; }
+
 protected:
 	void requireArgument(std::string name);
 
@@ -40,7 +48,9 @@ public:
 
 	//DO NOT OVERRIDE THIS IS PART OF THE INNER API
 	virtual int execute() override;
-
+	//DO NOT OVERRIDE THIS IS PART OF THE INNER API
+	virtual void extraParsing(tinyxml2::XMLElement* ele, std::unordered_map<std::string, Statement*> m_statementPossibilities) override;
+	
 	//call of a function
 	virtual int onCall() { return 1; };
 
@@ -54,10 +64,21 @@ public:
 	~ControlGroup();
 
 	//makes a copy
-	virtual ControlGroup* create() { return nullptr; }
+	virtual Statement* create() { return nullptr; }
+
+	//DO NOT OVERRIDE THIS IS PART OF THE INNER API
+	virtual int execute() override;
+	//DO NOT OVERRIDE THIS IS PART OF THE INNER API
+	virtual void extraParsing(tinyxml2::XMLElement* ele, std::unordered_map<std::string, Statement*> m_statementPossibilities) override;
+	//DO NOT OVERRIDE THIS IS PART OF THE INNER API
+	virtual void destroy();
 
 	//wheter or not this evaluates as true
 	virtual bool isTrue() { return false; }
+private:
+	std::vector<Statement*> m_sequence;
+
+	bool m_inverted = false;
 };
 
 //events will use their own XML handler rather than the normal one

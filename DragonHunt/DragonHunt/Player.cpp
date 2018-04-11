@@ -105,6 +105,8 @@ void Player::addSequenceItems(Event * evnt)
 	evnt->addStatementPossibility("trigger", new Trigger(this));
 	evnt->addStatementPossibility("setmacro", new SetMacro(this));
 	evnt->addStatementPossibility("gotolocation", new GoToLocation(this));
+
+	evnt->addStatementPossibility("triggered", new Triggered(this));
 }
 
 void Player::setMacro(std::string name, std::string value)
@@ -187,4 +189,23 @@ int GoToLocation::onCall()
 {
 	m_player->gotToLocation(getArgument("destination"));
 	return 0;
+}
+
+Triggered::Triggered(Player * player) : m_player(player)
+{
+	requireArgument("triggername");
+}
+
+Triggered::~Triggered()
+{
+}
+
+Statement * Triggered::create()
+{
+	return new Triggered(m_player);
+}
+
+bool Triggered::isTrue()
+{
+	return m_player->wasTriggered(getArgument("triggername"));
 }
