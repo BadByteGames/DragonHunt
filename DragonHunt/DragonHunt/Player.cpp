@@ -105,6 +105,7 @@ void Player::addSequenceItems(Event * evnt)
 	evnt->addSequencePossibility("print", new Print(this));
 	evnt->addSequencePossibility("trigger", new Trigger(this));
 	evnt->addSequencePossibility("setmacro", new SetMacro(this));
+	evnt->addSequencePossibility("gotolocation", new GoToLocation(this));
 }
 
 void Player::setMacro(std::string name, std::string value)
@@ -121,6 +122,14 @@ void Player::setMacro(std::string name, std::string value)
 	else {
 		//insert a new macro
 		m_macros.insert(std::make_pair(macroName, value));
+	}
+}
+
+void Player::gotToLocation(std::string name)
+{
+	auto l_pair = m_adv->m_locations.find(name);
+	if (l_pair != m_adv->m_locations.end()) {
+		m_adv->setCurrentLocation(l_pair->first, &l_pair->second);
 	}
 }
 
@@ -158,5 +167,25 @@ SequenceItem * SetMacro::create()
 int SetMacro::onCall()
 {
 	m_player->setMacro(getArgument("name"), getArgument("value"));
+	return 0;
+}
+
+GoToLocation::GoToLocation(Player * player) :m_player(player)
+{
+	requireArgument("destination");
+}
+
+GoToLocation::~GoToLocation()
+{
+}
+
+SequenceItem * GoToLocation::create()
+{
+	return new GoToLocation(m_player);
+}
+
+int GoToLocation::onCall()
+{
+	m_player->gotToLocation(getArgument("destination"));
 	return 0;
 }

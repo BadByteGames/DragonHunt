@@ -121,6 +121,10 @@ int XMLHandler::populateChildren(tinyxml2::XMLElement * elementToParse, bool use
 				onChildParsed(currentElement->Name(), handler);
 				//make sure to clear that child's text
 				handler->m_text = "";
+				//also clear out its childrens
+				handler->m_children.clear();
+				//also clear its attributes
+				handler->m_attributes.clear();
 			}
 			//check if that element is an event
 			else if (m_events.find(currentElement->Name()) != m_events.end()) {

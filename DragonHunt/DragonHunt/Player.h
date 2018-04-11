@@ -44,6 +44,18 @@ private:
 	Player * m_player;
 };
 
+class GoToLocation : public SequenceItem {
+public:
+	GoToLocation(Player* player);
+	~GoToLocation();
+
+	virtual SequenceItem* create() override;
+	virtual int onCall() override;
+
+private:
+	Player * m_player;
+};
+
 class Player
 {
 public:
@@ -62,6 +74,8 @@ public:
 	void addSequenceItems(Event* evnt);
 
 	void setMacro(std::string name, std::string value);
+
+	void gotToLocation(std::string name);
 
 	std::string evaluateMacros(std::string original);
 

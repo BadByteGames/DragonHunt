@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
-<adventure name="test" version="1.0" start="clearing">
+<adventure name="test" version="1.0" start="Clearing">
 	<cc>
 		<li>This test adventure is in public domain and allowed for use by anybody.</li>
 		<li>Originally written by Robert White (armedturret).</li>
 	</cc>
-	<location name="clearing">
+	<location name="Clearing">
 		<description>A plain green grassy clearing. The grass is short as if cut recently.</description>
 		<!--<item name="clippers">
 			<description>A pair of grass clippers with green handles. There is some rust on it but is still usable.</description>
@@ -21,22 +21,15 @@
 				<print text="A pair of grass clippers with green handles. There is some rust on it but is still usable."/>
 			</inspect>
 		</item>-->
-		<godirection direction="north">
-			<print text="went north"/>
-			<trigger triggername="testtrigger"/>
-		</godirection>
-		<godirection direction="west">
-			<print text="went west"/>
-		</godirection>
 		<godirection direction="south">
-			<print text="went south"/>
+			<gotolocation destination="Place"/>
 		</godirection>
-		<godirection direction="east">
-			<print text="went east"/>
+	</location>
+	<location name="Place">
+		<description>Another place.</description>
+		<godirection direction="north">
+			<gotolocation destination="Clearing"/>
 		</godirection>
-		<trigger triggername="testtrigger">
-		<print text="This is a %test% call"/>
-	</trigger>
 	</location>
 	<!--<useitem itemname="clippers">
 		<print text="You cut yourself with the clippers." />
@@ -45,17 +38,4 @@
 	<ondeath>
 		<print text="You died" />
 	</ondeath>-->
-	<!--A little example test event-->
-	
-	<begin>
-		<print text="I've been called!"/>
-		<setmacro name="test" value="test"/>
-		<trigger triggername="testtrigger"/>
-		<print text="Let's call that trigger again"/>
-		<setmacro name="test" value="meme"/>
-		<trigger triggername="testtrigger"/>
-	</begin>
-	<trigger triggername="testtrigger">
-		<print text="trigger called"/>
-	</trigger>
 </adventure>
