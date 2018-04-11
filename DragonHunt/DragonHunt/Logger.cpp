@@ -38,6 +38,11 @@ void Logger::logEvent(std::string subsystemName, std::string message)
 	//remove newlines from time stamp
 	std::remove(str, str+sizeof(str) / sizeof(char), '\n');
 
+	//add special message if error
+	if (subsystemName == "error") {
+		std::cout << "An error occurred, please check runtime.log for details." << std::endl;
+	}
+
 	//add time stamp to file
 	o << "["<< str<<"][" << subsystemName << "]: " << message << std::endl;
 	o.close();

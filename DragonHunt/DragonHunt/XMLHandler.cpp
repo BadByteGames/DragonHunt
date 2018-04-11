@@ -74,7 +74,6 @@ int XMLHandler::populateAttributes(tinyxml2::XMLElement * elementToParse)
 		//gets attribute
 		const char * val = elementToParse->Attribute(it->first.c_str());
 		if (val == NULL && it->second) {
-			std::cout << "An error occurred, please check runtime.log for details" << std::endl;
 			Logger::logEvent("error", "expected attribute \"" + it->first + "\" at line " + std::to_string(elementToParse->GetLineNum()) + " (" +elementToParse->Name()+")");
 			return 1;
 		}
@@ -106,7 +105,6 @@ int XMLHandler::populateChildren(tinyxml2::XMLElement * elementToParse, bool use
 					//check the element wasn't already found as there can only be one
 					auto secondIt = m_children.find(currentElement->Name());
 					if (secondIt != m_children.end()) {
-						std::cout << "An error occurred, please check runtime.log for details" << std::endl;
 						Logger::logEvent("error", "Element at line " + std::to_string(p->GetLineNum()) + ": \"" + p->Value() + "\" already exists, please remove it.");
 						return 1;
 					}
@@ -168,14 +166,12 @@ int XMLHandler::populateChildren(tinyxml2::XMLElement * elementToParse, bool use
 					m_eventDefined.insert(std::make_pair(currentElement->Name()+argumentMacro, true));
 				}
 				else {
-					std::cout << "An error occurred, please check runtime.log for details" << std::endl;
 					Logger::logEvent("error", "Event at line " + std::to_string(currentElement->GetLineNum()) + " was already defined.");
 					return 1;
 				}
 				Logger::logEvent("XMLHandler", "finished parsing element " + std::string(currentElement->Name()));
 			}
 			else {
-				std::cout << "An error occurred, please check runtime.log for details" << std::endl;
 				Logger::logEvent("error", "Unknown element at line " + std::to_string(p->GetLineNum()) + ": " + p->Value());
 				return 1;
 			}
@@ -189,7 +185,6 @@ int XMLHandler::populateChildren(tinyxml2::XMLElement * elementToParse, bool use
 		}
 		else {
 			//Uh-oh, its an unkown
-			std::cout << "An error occurred, please check runtime.log for details" << std::endl;
 			Logger::logEvent("error", "Unknown node at line " + std::to_string(p->GetLineNum())+": "+p->Value());
 			return 1;
 		}
@@ -203,7 +198,6 @@ int XMLHandler::populateChildren(tinyxml2::XMLElement * elementToParse, bool use
 		if (it.second & XMLChildFlag::REQUIRED) {
 			if (m_children.find(it.first) == m_children.end()) {
 				//we didn't find a required item
-				std::cout << "An error occurred, please check runtime.log for details" << std::endl;
 				//create string to allow for addition
 				Logger::logEvent("error", "Element \"" + std::string(elementToParse->Name()) + "\" (line " + std::to_string(elementToParse->GetLineNum())+") expected a child element \"" + it.first+"\"");
 				return 1;

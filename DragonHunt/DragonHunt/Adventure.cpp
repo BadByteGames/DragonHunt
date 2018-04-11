@@ -73,6 +73,12 @@ void Adventure::loadFromFile(std::string originFile)
 			auto l_pair = m_locations.find(getAttribute("start"));
 			setCurrentLocation(l_pair->first, &l_pair->second);
 		}
+		else {
+			Logger::logEvent("error", "Start location does not exist.");
+			std::string a;
+			std::getline(std::cin, a);
+			return;
+		}
 
 		if (wasEventDefined("begin"))
 			this->executeEvent("begin");

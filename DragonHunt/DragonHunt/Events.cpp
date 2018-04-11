@@ -41,7 +41,6 @@ int Event::parseFromElement(tinyxml2::XMLElement* rootNode)
 						Logger::logEvent("Event", cur.first + " = " + e->Attribute(cur.first.c_str()));
 					}
 					else {
-						std::cout << "An error occurred, please check runtime.log for details" << std::endl;
 						Logger::logEvent("error", "Element at line " + std::to_string(rootChild->GetLineNum()) + " missing required argument \""+ cur.first+"\"");
 						return 1;
 					}
@@ -50,13 +49,11 @@ int Event::parseFromElement(tinyxml2::XMLElement* rootNode)
 				m_sequence.push_back(si);
 			}
 			else {
-				std::cout << "An error occurred, please check runtime.log for details" << std::endl;
 				Logger::logEvent("error", "Unknown element at line " + std::to_string(rootChild->GetLineNum()));
 				return 1;
 			}
 		}
 		else {
-			std::cout << "An error occurred, please check runtime.log for details" << std::endl;
 			Logger::logEvent("error", "Unknown node at line "+std::to_string(rootChild->GetLineNum()));
 			return 1;
 		}
