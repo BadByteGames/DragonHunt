@@ -68,6 +68,18 @@ private:
 	Player * m_player;
 };
 
+class AtLocation : public ControlGroup {
+public:
+	AtLocation(Player* player);
+	~AtLocation();
+
+	virtual Statement* create() override;
+	virtual bool isTrue() override;
+
+private:
+	Player * m_player;
+};
+
 class Player
 {
 public:
@@ -81,6 +93,9 @@ public:
 
 	//mostly called by events to check if a certain thing was triggered
 	bool wasTriggered(std::string name);
+
+	//checks wheter or not the current location is this
+	bool atLocation(std::string name);
 
 	//adds all default sequenceitem
 	void addSequenceItems(Event* evnt);

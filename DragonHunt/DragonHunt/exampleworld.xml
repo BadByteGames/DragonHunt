@@ -37,11 +37,11 @@
 		<trigger triggername="testcall"/>
 	</begin>
 	<trigger triggername="testcall">
-		<triggered triggername="test">
-			<print text="test has been triggered"/>
-		</triggered>
-		<triggered triggername="test" not="yes">
-			<print text="test has not been triggered"/>
-		</triggered>
+		<atlocation name="Clearing">
+			<print text="at clearing"/>
+		</atlocation>
+		<atlocation name="Clearing" not="yes">
+			<print text="not at clearing"/>
+		</atlocation>
 	</trigger>
 </adventure>

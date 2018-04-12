@@ -99,6 +99,11 @@ bool Player::wasTriggered(std::string name)
 	}
 }
 
+bool Player::atLocation(std::string name)
+{
+	return name==m_adv->m_currentLocation->getAttribute("name");
+}
+
 void Player::addSequenceItems(Event * evnt)
 {
 	evnt->addStatementPossibility("print", new Print(this));
@@ -107,6 +112,7 @@ void Player::addSequenceItems(Event * evnt)
 	evnt->addStatementPossibility("gotolocation", new GoToLocation(this));
 
 	evnt->addStatementPossibility("triggered", new Triggered(this));
+	evnt->addStatementPossibility("atlocation", new AtLocation(this));
 }
 
 void Player::setMacro(std::string name, std::string value)
@@ -208,4 +214,23 @@ Statement * Triggered::create()
 bool Triggered::isTrue()
 {
 	return m_player->wasTriggered(getArgument("triggername"));
+}
+
+AtLocation::AtLocation(Player * player):m_player(player)
+{
+	requireArgument("name");
+}
+
+AtLocation::~AtLocation()
+{
+}
+
+Statement * AtLocation::create()
+{
+	return new AtLocation(m_player);
+}
+
+bool AtLocation::isTrue()
+{
+	return m_player->atLocation(getArgument("name"));
 }
