@@ -183,7 +183,6 @@ int main(int argc, char** argv) {
 		args += " ";
 	}
 	Logger::logEvent("main", "Arguments: "+args);
-
 	//create app info for easycmd
 	EasyCmd::AppInfo inf;
 	inf.AppName = "DragonHunt";
@@ -194,10 +193,9 @@ int main(int argc, char** argv) {
 	inf.version.major = 1;
 	inf.version.minor = 0;
 	inf.version.patch = 0;
-
+	
 	EasyCmd::CMDHandler handler(inf);
 	handler.setDefaultCommand(new DefaultDragonHuntCMD());
-
 	handler.parseCommand(argc, argv);
 	handler.cleanup();
 

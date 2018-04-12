@@ -91,7 +91,11 @@ namespace EasyCmd {
 
 	struct Version {
 		Version() {}
-		Version(int major, int minor, int patch) :major(major), minor(minor), patch(patch) {}
+		Version(int major, int minor, int patch) {
+			this->major = major;
+			this->minor = minor;
+			this->patch = patch;
+		}
 		int major;
 		int minor;
 		int patch;
@@ -464,7 +468,6 @@ namespace EasyCmd {
 					this->addCommand("config", new Config());
 				}
 			}
-
 			if (inf.UseGlobalConfig) {
 				m_globals.init(getInstallDir());
 			}
@@ -486,7 +489,8 @@ namespace EasyCmd {
 		}
 
 		int setDefaultCommand(CMD* command) {
-			delete this->m_mainCommand;
+			if(this->m_mainCommand != nullptr)
+				delete this->m_mainCommand;
 			command->cmdInit(this->m_info, getInstallDir(), &m_globals,CommandInfo());
 			this->m_mainCommand = command;
 			return EASYCMD_OK;
@@ -494,7 +498,8 @@ namespace EasyCmd {
 
 		int setAddedEvent(CMDAddedEvent* eventHandler) {
 			//delete the previouse thing
-			delete this->m_added;
+			if(this->m_mainCommand != nullptr)
+				delete this->m_added;
 			this->m_added = eventHandler;
 			return EASYCMD_OK;
 		}
@@ -646,10 +651,10 @@ namespace EasyCmd {
 			return EASYCMD_OK;
 		}
 
-		CMDAddedEvent* m_added;
+		CMDAddedEvent* m_added = nullptr;
 
 		std::unordered_map<std::string, CMD*> m_commands;
-		CMD* m_mainCommand;
+		CMD* m_mainCommand = nullptr;
 		AppInfo m_info;
 
 		Globals m_globals;
