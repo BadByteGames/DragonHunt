@@ -34,7 +34,7 @@ void Logger::logEvent(std::string subsystemName, std::string message)
 	auto now = std::chrono::system_clock::now();
 	time_t nowTime = std::chrono::system_clock::to_time_t(now);
 	char str[26];
-#ifdef _MSVC
+#if defined(_MSVC_LANG)
 	ctime_s(str, sizeof(str), &nowTime);
 #else
 	strcpy(str, ctime(&nowTime));
