@@ -21,6 +21,12 @@
 				<print text="A pair of grass clippers with green handles. There is some rust on it but is still usable."/>
 			</inspect>
 		</item>-->
+		<arrivefirsttime>
+			<print text="first time"/>
+		</arrivefirsttime>
+		<arrive>
+			<print text="at clearing"/>
+		</arrive>
 	</location>
 	<!--<useitem itemname="clippers">
 		<print text="You cut yourself with the clippers." />
@@ -29,19 +35,4 @@
 	<ondeath>
 		<print text="You died" />
 	</ondeath>-->
-	<begin>
-		<print text="testp1"/>
-		<trigger triggername="testcall"/>
-		<print text="testp2"/>
-		<trigger triggername="test"/>
-		<trigger triggername="testcall"/>
-	</begin>
-	<trigger triggername="testcall">
-		<atlocation name="Clearing">
-			<print text="at clearing"/>
-		</atlocation>
-		<atlocation name="Clearing" not="yes">
-			<print text="not at clearing"/>
-		</atlocation>
-	</trigger>
 </adventure>

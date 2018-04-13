@@ -158,8 +158,26 @@ void Adventure::parserLoop()
 
 void Adventure::setCurrentLocation(std::string name, Location * location)
 {
+	//trigger the current location's leave event
+	if (m_currentLocation != nullptr && m_currentLocation->wasEventDefined("leave")) {
+		m_currentLocation->executeEvent("leave");
+	}
+
+	//check out if the new location has an arrive and arrivefirsttime event
+	if ((!location->getVisited()) && location->wasEventDefined("arrivefirsttime")) {
+		location->executeEvent("arrivefirsttime");
+		location->setVisited();
+	}
+
+	if (location->wasEventDefined("arrive")) {
+		location->executeEvent("arrive");
+	}
+
+	//print out name and desription
 	std::cout << "\n" <<m_player.evaluateMacros(name)<<"\n" << std::endl;
-	std::cout << m_player.evaluateMacros(location->m_description) << "\n"  << std::endl;
+	std::cout << m_player.evaluateMacros(location->getDescription()) << "\n"  << std::endl;
+
+	//change current location
 	m_currentLocation = location;
 }
 

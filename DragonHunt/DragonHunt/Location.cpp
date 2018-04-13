@@ -9,7 +9,6 @@ Location::Location()
 	this->addChild("description", new LocationDescription(), XMLChildFlag::REQUIRED | XMLChildFlag::USESTEXT);
 
 	this->addAttribute("name", true);
-
 }
 
 
@@ -28,12 +27,24 @@ void Location::onChildParsed(std::string name, XMLHandler * child)
 
 void Location::setupSequences(Player * player)
 {
+	//init events
 	Event goDirection;
 	Event trigger;
+	Event arriveFirstTime;
+	Event arrive;
+	Event leave;
 
+	//add sequence jtems
 	player->addSequenceItems(&goDirection);
 	player->addSequenceItems(&trigger);
+	player->addSequenceItems(&arriveFirstTime);
+	player->addSequenceItems(&arrive);
+	player->addSequenceItems(&leave);
 
+	//add item to adventure
+	this->addEvent("arrivefirsttime", arriveFirstTime);
+	this->addEvent("arrive", arrive);
+	this->addEvent("leave", leave);
 	this->addEvent("godirection", goDirection);
 	this->addEvent("trigger", trigger);
 }
