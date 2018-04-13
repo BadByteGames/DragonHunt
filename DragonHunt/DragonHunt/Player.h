@@ -56,6 +56,18 @@ private:
 	Player * m_player;
 };
 
+class Suicide : public SequenceItem {
+public:
+	Suicide(Player* player);
+	~Suicide();
+
+	virtual Statement* create() override;
+	virtual int onCall() override;
+
+private:
+	Player * m_player;
+};
+
 class Triggered : public ControlGroup {
 public:
 	Triggered(Player* player);
@@ -104,7 +116,11 @@ public:
 
 	void gotToLocation(std::string name);
 
+	void die();
+
 	std::string evaluateMacros(std::string original);
+
+	bool isDead() const { return m_isDead; }
 
 private:
 	//map of all the GLOBAL triggers (not prefixed by !)
@@ -114,6 +130,9 @@ private:
 	//a map storing the values of all the macros
 	//name, value
 	std::unordered_map<std::string, std::string> m_macros;
+
+	//wheter or not the player is dead
+	bool m_isDead;
 
 	Adventure* m_adv;
 };

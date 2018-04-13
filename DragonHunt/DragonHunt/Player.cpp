@@ -110,6 +110,7 @@ void Player::addSequenceItems(Event * evnt)
 	evnt->addStatementPossibility("trigger", new Trigger(this));
 	evnt->addStatementPossibility("setmacro", new SetMacro(this));
 	evnt->addStatementPossibility("gotolocation", new GoToLocation(this));
+	evnt->addStatementPossibility("suicide", new Suicide(this));
 
 	evnt->addStatementPossibility("triggered", new Triggered(this));
 	evnt->addStatementPossibility("atlocation", new AtLocation(this));
@@ -138,6 +139,16 @@ void Player::gotToLocation(std::string name)
 	if (l_pair != m_adv->m_locations.end()) {
 		m_adv->setCurrentLocation(l_pair->first, &l_pair->second);
 	}
+}
+
+void Player::die()
+{
+	m_isDead = true;
+
+	if (m_adv->wasEventDefined("ondeath")) {
+		m_adv->executeEvent("ondeath");
+	}
+	
 }
 
 std::string Player::evaluateMacros(std::string original)
@@ -179,7 +190,7 @@ int SetMacro::onCall()
 
 GoToLocation::GoToLocation(Player * player) :m_player(player)
 {
-	requireArgument("destination");
+	requireArgument("name");
 }
 
 GoToLocation::~GoToLocation()
@@ -193,7 +204,7 @@ SequenceItem * GoToLocation::create()
 
 int GoToLocation::onCall()
 {
-	m_player->gotToLocation(getArgument("destination"));
+	m_player->gotToLocation(getArgument("name"));
 	return 0;
 }
 
@@ -233,4 +244,23 @@ Statement * AtLocation::create()
 bool AtLocation::isTrue()
 {
 	return m_player->atLocation(getArgument("name"));
+}
+
+Suicide::Suicide(Player * player):m_player(player)
+{
+}
+
+Suicide::~Suicide()
+{
+}
+
+Statement * Suicide::create()
+{
+	return new Suicide(m_player);
+}
+
+int Suicide::onCall()
+{
+	m_player->die();
+	return 0;
 }

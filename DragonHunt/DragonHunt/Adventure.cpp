@@ -41,14 +41,16 @@ void Adventure::loadFromFile(std::string originFile)
 	//create events
 	Event autoCall;
 	Event trigger;
-	
+	Event onDeath;
 
-	//make sure to add trigger sequence item
+	//make sure to sequence items
 	m_player.addSequenceItems(&autoCall);
 	m_player.addSequenceItems(&trigger);
+	m_player.addSequenceItems(&onDeath);
 
 	this->addEvent("begin", autoCall);
 	this->addEvent("trigger", trigger);
+	this->addEvent("ondeath", onDeath);
 	
 
 	if (this->parseFromElement(m_doc.FirstChildElement())) {
@@ -123,7 +125,7 @@ void Adventure::parserLoop()
 		Logger::logEvent("user", ">"+input);
 		
 		//check wheter user wants to quit
-		if (input == "quit" || input == "exit") {
+		if (input == "quit" || input == "exit" || m_player.isDead()) {
 			shouldContinue = false;
 		}
 		else if(input!=""){
@@ -139,12 +141,12 @@ void Adventure::parserLoop()
 				Logger::logEvent("Adventure", "Unknown verb "+ results[0].value);
 			}
 			else if (results[0].value == "go") {
-				if (results.size() >= 2 && !(m_currentLocation->wasEventDefined("godirection", "direction:" + results[1].value))) {
+				if (results.size() >= 2 && !(m_currentLocation->wasEventDefined("godirection", "name:" + results[1].value))) {
 					std::cout << "I only understood you as far as wanting to go somewhere." << std::endl;
 					Logger::logEvent("Adventure", "Unknown direction \"" + results[1].value + "\"");
 				}
 				else if(results.size() >= 2) {
-					m_currentLocation->executeEvent("godirection", "direction:" + results[1].value);
+					m_currentLocation->executeEvent("godirection", "name:" + results[1].value);
 				}
 				else {
 					std::cout << "I only understood you as far as wanting to go somewhere." << std::endl;

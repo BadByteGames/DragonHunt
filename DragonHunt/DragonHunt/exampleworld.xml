@@ -21,6 +21,9 @@
 				<print text="A pair of grass clippers with green handles. There is some rust on it but is still usable."/>
 			</inspect>
 		</item>-->
+		<godirection name="north">
+			<suicide/>
+		</godirection>
 		<arrivefirsttime>
 			<print text="first time"/>
 		</arrivefirsttime>
@@ -31,8 +34,8 @@
 	<!--<useitem itemname="clippers">
 		<print text="You cut yourself with the clippers." />
 		<suicide/>
-	</useitem>
+	</useitem>-->
 	<ondeath>
 		<print text="You died" />
-	</ondeath>-->
+	</ondeath>
 </adventure>
