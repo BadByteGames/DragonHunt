@@ -46,13 +46,11 @@ void XMLHandler::destroy()
 
 	//clean up the events
 	for (auto it : m_events) {
-		//see if this event type hasn't been cleaned up yet
-		if (m_wasCleanedYet.find(it.first) != m_wasCleanedYet.end()) {
-			it.second.destroy();
-			m_wasCleanedYet.insert(std::make_pair(it.first, true));
-		}else
-			//otherwise, just destroy the items
-			it.second.destroyStatementsOnly();
+		it.second.destroyStatementsOnly();
+	}
+
+	for (auto it : m_allowedEvents) {
+		it.second.destroy();
 	}
 }
 
@@ -123,9 +121,12 @@ int XMLHandler::populateChildren(tinyxml2::XMLElement * elementToParse, bool use
 				handler->m_children.clear();
 				//also clear its attributes
 				handler->m_attributes.clear();
+				//and lastly events
+				handler->m_events.clear();
+				handler->m_eventDefined.clear();
 			}
 			//check if that element is an event
-			else if (m_events.find(currentElement->Name()) != m_events.end()) {
+			else if (m_allowedEvents.find(currentElement->Name()) != m_allowedEvents.end()) {
 				Logger::logEvent("XMLHandler", "began parsing element " + std::string(currentElement->Name()) + " at line " + std::to_string(currentElement->GetLineNum()));
 				
 				//create the argument macro
@@ -144,7 +145,7 @@ int XMLHandler::populateChildren(tinyxml2::XMLElement * elementToParse, bool use
 				//check if wasn't defined
 				if (!wasEventDefined(currentElement->Name(),argumentMacro)) {
 					//found an event so just call its sequence builder
-					auto evnt = m_events.find(currentElement->Name());
+					auto evnt = m_allowedEvents.find(currentElement->Name());
 
 					//if argumentMacro != "", create a new event
 					if (argumentMacro != "") {
@@ -157,6 +158,14 @@ int XMLHandler::populateChildren(tinyxml2::XMLElement * elementToParse, bool use
 						m_events.insert(std::make_pair(currentElement->Name() + argumentMacro,newEvent));
 					}
 					else {
+						auto newEvent = Event(evnt->second);
+
+						if (newEvent.parseFromElement(currentElement)) {
+							return 1;
+						}
+
+						m_events.insert(std::make_pair(currentElement->Name() + argumentMacro, newEvent));
+
 						if (evnt->second.parseFromElement(currentElement)) {
 							return 1;
 						}
@@ -210,7 +219,7 @@ int XMLHandler::populateChildren(tinyxml2::XMLElement * elementToParse, bool use
 
 void XMLHandler::addEvent(std::string name, Event evnt)
 {
-	m_events.insert(std::make_pair(name, evnt));
+	m_allowedEvents.insert(std::make_pair(name, evnt));
 }
 
 void XMLHandler::executeEvent(std::string name, std::string argumentMacro)

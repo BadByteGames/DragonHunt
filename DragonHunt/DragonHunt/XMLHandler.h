@@ -61,6 +61,9 @@ private:
 	std::multimap<std::string, bool> m_children;
 	
 	//name, Event
+	std::unordered_map<std::string, Event> m_allowedEvents;
+
+	//name, Event
 	std::unordered_map<std::string, Event> m_events;
 
 	//name, wasDefined

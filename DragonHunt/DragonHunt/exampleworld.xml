@@ -25,10 +25,19 @@
 		<godirection name="north">
 			<suicide/>
 		</godirection>
+		<godirection name="south">
+			<gotolocation name="Place"/>
+		</godirection>
 		<arrivefirsttime>
 			<!--Set clippers description-->
 			<setmacro name="clipperdesc" value="A pair of clippers lies in the grass."/>
 		</arrivefirsttime>
+	</location>
+	<location name="Place">
+		<description>Smpl Txt</description>
+		<godirection name="north">
+			<gotolocation name="Clearing"/>
+		</godirection>
 	</location>
 	<!--<useitem itemname="clippers">
 		<print text="You cut yourself with the clippers." />
