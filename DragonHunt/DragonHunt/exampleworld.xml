@@ -18,9 +18,9 @@
 			<drop>
 				<print text="You lay down the clippers."/>
 			</drop>-->
-			<inspect>
+			<!--<inspect>
 				<print text="A pair of grass clippers with green handles. There is some rust on it but is still usable."/>
-			</inspect>
+			</inspect>-->
 		</item>
 		<godirection name="north">
 			<suicide/>

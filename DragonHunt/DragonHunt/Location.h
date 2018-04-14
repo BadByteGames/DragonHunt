@@ -36,6 +36,8 @@ public:
 
 	std::string getDescription() const { return m_description; }
 
+	AdventureItem getItem(std::string name);
+
 private:
 	std::string m_description;
 

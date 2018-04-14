@@ -173,7 +173,7 @@ void Adventure::parserLoop()
 						m_currentLocation->executeEventForItem(results[1].value, "inspect");
 					}
 					else {
-						//TODO: print out item description
+						std::cout << m_currentLocation->getItem(results[1].value).getDescription() << std::endl;
 					}
 				}
 				else {

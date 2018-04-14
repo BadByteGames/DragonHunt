@@ -79,6 +79,14 @@ void Location::setupSequences(Player * player)
 	this->addChild("item", i, XMLChildFlag::MULTIPLE);
 }
 
+AdventureItem Location::getItem(std::string name)
+{
+	auto it = m_items.find(name);
+	if (it != m_items.end())
+		return it->second;
+	return AdventureItem();
+}
+
 LocationDescription::LocationDescription()
 {	
 }

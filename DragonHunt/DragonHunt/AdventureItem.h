@@ -20,6 +20,8 @@ public:
 
 	void setupSequenceItems(Player* player);
 
+	std::string getDescription() const { return m_description; }
+
 private:
 	std::string m_description = "";
 };
