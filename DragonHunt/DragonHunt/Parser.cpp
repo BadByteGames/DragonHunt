@@ -22,11 +22,11 @@ std::vector<TOKENDATA> Parser::parse(std::string toParse, const std::vector<TOKE
 	//add all keywords to the vector
 	//push_back adds new items to the vector
 	m_keywords.push_back(TOKENPAIR("go", TOKEN::VERB));
-	m_keywords.push_back(TOKENPAIR("pick up", TOKEN::VERB));
 	m_keywords.push_back(TOKENPAIR("drop", TOKEN::VERB));
 	m_keywords.push_back(TOKENPAIR("take", TOKEN::VERB));
 	m_keywords.push_back(TOKENPAIR("push", TOKEN::VERB));
 	m_keywords.push_back(TOKENPAIR("help", TOKEN::VERB));
+	m_keywords.push_back(TOKENPAIR("inspect", TOKEN::VERB));
 	
 	//add all engine passed tokens
 	for (auto t : possibleTokens) {

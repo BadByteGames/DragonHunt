@@ -1,6 +1,7 @@
 #include "Location.h"
 
 #include "Player.h"
+#include "AdventureItem.h"
 
 #include <iostream>
 
@@ -22,7 +23,31 @@ void Location::onChildParsed(std::string name, XMLHandler * child)
 	if (name == "description") {
 		m_description = child->getText();
 	}
+	else if (name == "item") {
+		AdventureItem a = (AdventureItem)*((AdventureItem*)child);
+		m_items.insert(std::make_pair(a.getAttribute("name"), a));
+	}
 	
+}
+
+bool Location::wasEventDefinedForItem(std::string name, std::string eventName)
+{
+	auto it = m_items.find(name);
+	if (it != m_items.end() && it->second.wasEventDefined(eventName))
+		return true;
+	return false;
+}
+
+void Location::executeEventForItem(std::string name, std::string eventName)
+{
+	auto it = m_items.find(name);
+	if (it != m_items.end() && it->second.wasEventDefined(eventName))
+		it->second.executeEvent(eventName);
+}
+
+bool Location::hasItem(std::string name)
+{
+	return m_items.find(name) != m_items.end();
 }
 
 void Location::setupSequences(Player * player)
@@ -47,6 +72,11 @@ void Location::setupSequences(Player * player)
 	this->addEvent("leave", leave);
 	this->addEvent("godirection", goDirection);
 	this->addEvent("trigger", trigger);
+
+	//also setup items sequence items
+	auto i = new AdventureItem();
+	i->setupSequenceItems(player);
+	this->addChild("item", i, XMLChildFlag::MULTIPLE);
 }
 
 LocationDescription::LocationDescription()
@@ -59,8 +89,4 @@ LocationDescription::~LocationDescription()
 
 void LocationDescription::onChildParsed(std::string name, XMLHandler * child)
 {
-	//can ONLY have item desc so replace it with a special signifier
-	if (name == "itemdesc") {
-		m_text += "%item:" + child->getAttribute("name") + "%";
-	}
 }

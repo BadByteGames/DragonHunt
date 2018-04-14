@@ -1,6 +1,7 @@
 #pragma once
 
 #include "XMLHandler.h"
+#include "AdventureItem.h"
 
 class Player;
 
@@ -23,6 +24,12 @@ public:
 
 	void setVisited() { m_visited = true; }
 	
+	bool wasEventDefinedForItem(std::string name, std::string eventName);
+
+	void executeEventForItem(std::string name, std::string eventName);
+
+	bool hasItem(std::string name);
+
 	void setupSequences(Player* player);
 
 	bool getVisited() const { return m_visited; }
@@ -31,6 +38,8 @@ public:
 
 private:
 	std::string m_description;
+
+	std::unordered_map<std::string, AdventureItem> m_items;
 
 	bool m_visited = false;
 };

@@ -150,7 +150,35 @@ void Adventure::parserLoop()
 				}
 				else {
 					std::cout << "I only understood you as far as wanting to go somewhere." << std::endl;
-					Logger::logEvent("Adventure", "Direction not specefied");
+					Logger::logEvent("Adventure", "Direction not specified");
+				}
+			}
+			else if (results[0].value == "take") {
+				if (results.size() >= 2 && m_currentLocation->wasEventDefinedForItem(results[1].value, "pickup")) {
+					m_currentLocation->executeEventForItem(results[1].value, "pickup");
+				}
+				else if (results.size() >= 2 && m_currentLocation->hasItem(results[1].value)) {
+					std::cout << "You can't take that." << std::endl;
+					Logger::logEvent("Adventure", "Item pickup event not defined. Skipping take.");
+				}
+				else {
+					std::cout << "I see no such thing" << std::endl;
+					Logger::logEvent("Adventure", "Item non-existant at location or not specified");
+				}
+			}
+			else if (results[0].value == "inspect") {
+				if (results.size() >= 2 && m_currentLocation->hasItem(results[1].value)) {
+					//check if inspect event defined, if not print description
+					if (m_currentLocation->wasEventDefinedForItem(results[1].value, "inspect")) {
+						m_currentLocation->executeEventForItem(results[1].value, "inspect");
+					}
+					else {
+						//TODO: print out item description
+					}
+				}
+				else {
+					std::cout << "I see no such thing" << std::endl;
+					Logger::logEvent("Adventure", "Item non-existant at location or not specified");
 				}
 			}
 		}
