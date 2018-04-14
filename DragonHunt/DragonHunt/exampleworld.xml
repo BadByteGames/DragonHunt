@@ -11,6 +11,7 @@
 			<pickup>
 				<print text="You pick up the clippers."/>
 				<setmacro name="clipperdesc" value=""/>
+				<take/>
 			</pickup>
 			<!--<use>
 				<print text="You don't know what to use it on."/>

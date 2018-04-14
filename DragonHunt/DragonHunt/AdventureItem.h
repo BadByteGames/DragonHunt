@@ -2,6 +2,22 @@
 #include "XMLHandler.h"
 
 class Player;
+class AdventureItem;
+
+class Take : public SequenceItem {
+public:
+	Take(Player * player, AdventureItem* parent);
+	Take(Player * player, std::string parentName);
+	~Take();
+
+	virtual Statement* create() override;
+	virtual int onCall() override;
+
+private:
+	Player*m_player;
+	AdventureItem*m_adventureItem;
+	std::string m_parentName;
+};
 
 class ItemDescription : public XMLHandler {
 public:

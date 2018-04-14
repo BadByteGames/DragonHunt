@@ -4,6 +4,7 @@
 #include <unordered_map>
 
 #include "Events.h"
+#include "AdventureItem.h"
 
 class Adventure;
 class Player;
@@ -118,6 +119,8 @@ public:
 
 	void die();
 
+	void giveItem(std::string name);
+
 	std::string evaluateMacros(std::string original);
 
 	bool isDead() const { return m_isDead; }
@@ -130,6 +133,9 @@ private:
 	//a map storing the values of all the macros
 	//name, value
 	std::unordered_map<std::string, std::string> m_macros;
+
+	//items
+	std::unordered_map<std::string, AdventureItem> m_items;
 
 	//wheter or not the player is dead
 	bool m_isDead;

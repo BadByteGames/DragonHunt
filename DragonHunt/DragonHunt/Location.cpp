@@ -84,7 +84,19 @@ AdventureItem Location::getItem(std::string name)
 	auto it = m_items.find(name);
 	if (it != m_items.end())
 		return it->second;
+
+	std::cout << "Wuh-oh" << name << std::endl;
 	return AdventureItem();
+}
+
+void Location::removeItem(std::string name)
+{
+	m_items.erase(name);
+}
+
+void Location::addItem(std::string name, AdventureItem item)
+{
+	m_items.insert(std::make_pair(name, item));
 }
 
 LocationDescription::LocationDescription()

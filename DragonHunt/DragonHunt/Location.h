@@ -38,6 +38,10 @@ public:
 
 	AdventureItem getItem(std::string name);
 
+	void removeItem(std::string name);
+
+	void addItem(std::string name, AdventureItem item);
+
 private:
 	std::string m_description;
 

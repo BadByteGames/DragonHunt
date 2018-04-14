@@ -151,6 +151,12 @@ void Player::die()
 	
 }
 
+void Player::giveItem(std::string name)
+{
+	m_items.insert(std::make_pair(name, m_adv->m_currentLocation->getItem(name)));
+	m_adv->m_currentLocation->removeItem(name);
+}
+
 std::string Player::evaluateMacros(std::string original)
 {
 	std::string returnValue = original;

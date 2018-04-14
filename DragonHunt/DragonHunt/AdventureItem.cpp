@@ -30,6 +30,10 @@ void AdventureItem::setupSequenceItems(Player * player)
 	player->addSequenceItems(&pickup);
 	player->addSequenceItems(&inspect);
 
+	//add item specific statements
+	pickup.addStatementPossibility("take", new Take(player, this));
+	inspect.addStatementPossibility("take", new Take(player, this));
+
 	this->addEvent("inspect", inspect);
 	this->addEvent("pickup", pickup);
 }
@@ -40,4 +44,27 @@ ItemDescription::ItemDescription()
 
 ItemDescription::~ItemDescription()
 {
+}
+
+Take::Take(Player * player, AdventureItem* parent):m_player(player), m_adventureItem(parent)
+{
+}
+
+Take::Take(Player * player, std::string parentName) : m_player(player), m_parentName(parentName)
+{
+}
+
+Take::~Take()
+{
+}
+
+Statement * Take::create()
+{
+	return new Take(m_player,m_adventureItem->getAttribute("name"));
+}
+
+int Take::onCall()
+{
+	m_player->giveItem(m_parentName);
+	return 0;
 }
