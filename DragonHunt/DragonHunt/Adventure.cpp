@@ -37,6 +37,7 @@ void Adventure::loadFromFile(std::string originFile)
 	l->setupSequences(&m_player);
 	this->addChild("location", l, XMLChildFlag::MULTIPLE | XMLChildFlag::REQUIRED);
 	this->addChild("cc", new CCHandler());
+	this->addChild("synonym", new Synonym());
 
 	//create events
 	Event autoCall;
@@ -66,6 +67,14 @@ void Adventure::loadFromFile(std::string originFile)
 			std::getline(std::cin, a);
 			return;
 		}
+
+		//create initial synonyms
+		m_synonyms.insert(std::make_pair("pick up", "take"));
+		m_synonyms.insert(std::make_pair("pull open", "open"));
+		m_synonyms.insert(std::make_pair("push open", "open"));
+
+		//removes these words
+		m_synonyms.insert(std::make_pair("the", ""));
 
 		//print out cc
 		for (auto li : m_lines) {
@@ -112,6 +121,10 @@ void Adventure::onChildParsed(std::string name, XMLHandler * child)
 		Location l = (Location)*((Location*)child);
 		m_locations.insert(std::make_pair(l.getAttribute("name"), l));
 	}
+	else if (name == "synonym") {
+		//insert synonym
+		m_synonyms.insert(std::make_pair(child->getAttribute("name"), child->getAttribute("value")));
+	}
 }
 
 void Adventure::parserLoop()
@@ -123,6 +136,16 @@ void Adventure::parserLoop()
 		std::cout << ">";
 		std::getline(std::cin, input);
 		Logger::logEvent("user", ">"+input);
+		
+		//replace synonyms
+		for (auto s : m_synonyms) {
+			size_t synonymLocation = input.find(s.first);
+			if (synonymLocation != input.npos) {
+				input.replace(synonymLocation, s.first.length(), s.second);
+			}
+		}
+
+		Logger::logEvent("Adventure", "Received input: "+input);
 		
 		//check wheter user wants to quit
 		if (input == "quit" || input == "exit" || m_player.isDead()) {
@@ -211,3 +234,12 @@ void Adventure::setCurrentLocation(std::string name, Location * location)
 	m_currentLocation = location;
 }
 
+Synonym::Synonym()
+{
+	this->addAttribute("name", true);
+	this->addAttribute("value", true);
+}
+
+Synonym::~Synonym()
+{
+}
