@@ -5,11 +5,12 @@
 		<li>Originally written by Robert White (armedturret).</li>
 	</cc>
 	<location name="Clearing">
-		<description>A plain green grassy clearing. The grass is short as if cut recently.</description>
+		<description>A plain green grassy clearing. The grass is short as if cut recently. %clipperdesc% </description>
 		<item name="clippers">
 			<description>A pair of grass clippers with green handles. There is some rust on it but is still usable.</description>
 			<pickup>
 				<print text="You pick up the clippers."/>
+				<setmacro name="clipperdesc" value=""/>
 			</pickup>
 			<!--<use>
 				<print text="You don't know what to use it on."/>
@@ -25,11 +26,9 @@
 			<suicide/>
 		</godirection>
 		<arrivefirsttime>
-			<print text="first time"/>
+			<!--Set clippers description-->
+			<setmacro name="clipperdesc" value="A pair of clippers lies in the grass."/>
 		</arrivefirsttime>
-		<arrive>
-			<print text="at clearing"/>
-		</arrive>
 	</location>
 	<!--<useitem itemname="clippers">
 		<print text="You cut yourself with the clippers." />
