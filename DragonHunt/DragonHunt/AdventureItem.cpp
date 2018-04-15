@@ -29,6 +29,10 @@ void AdventureItem::setupSequenceItems(Player * player)
 	Event drop;
 	Event use;
 	Event useItem;
+	Event enter;
+	Event open;
+	Event push;
+	Event pull;
 
 	//add default sequence items
 	player->addSequenceItems(&pickup);
@@ -36,6 +40,10 @@ void AdventureItem::setupSequenceItems(Player * player)
 	player->addSequenceItems(&drop);
 	player->addSequenceItems(&use);
 	player->addSequenceItems(&useItem);
+	player->addSequenceItems(&enter);
+	player->addSequenceItems(&open);
+	player->addSequenceItems(&push);
+	player->addSequenceItems(&pull);
 
 	//add item specific statements
 	pickup.addStatementPossibility("take", new Take(player, this));
@@ -43,18 +51,30 @@ void AdventureItem::setupSequenceItems(Player * player)
 	drop.addStatementPossibility("take", new Take(player, this));
 	use.addStatementPossibility("take", new Take(player, this));
 	useItem.addStatementPossibility("take", new Take(player, this));
+	enter.addStatementPossibility("take", new Take(player, this));
+	open.addStatementPossibility("take", new Take(player, this));
+	push.addStatementPossibility("take", new Take(player, this));
+	pull.addStatementPossibility("take", new Take(player, this));
 
 	pickup.addStatementPossibility("drop", new Drop(player, this));
 	inspect.addStatementPossibility("drop", new Drop(player, this));
 	drop.addStatementPossibility("drop", new Drop(player, this));
 	use.addStatementPossibility("drop", new Drop(player, this));
 	useItem.addStatementPossibility("drop", new Drop(player, this));
+	enter.addStatementPossibility("drop", new Drop(player, this));
+	open.addStatementPossibility("drop", new Drop(player, this));
+	push.addStatementPossibility("drop", new Drop(player, this));
+	pull.addStatementPossibility("drop", new Drop(player, this));
 
 	this->addEvent("inspect", inspect);
 	this->addEvent("pickup", pickup);
 	this->addEvent("drop", drop);
 	this->addEvent("use", use);
 	this->addEvent("useitem", useItem);
+	this->addEvent("enter", enter);
+	this->addEvent("open", open);
+	this->addEvent("push", push);
+	this->addEvent("pull", pull);
 }
 
 ItemDescription::ItemDescription()

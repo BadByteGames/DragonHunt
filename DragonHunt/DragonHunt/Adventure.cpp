@@ -262,13 +262,64 @@ void Adventure::parserLoop()
 						Logger::logEvent("Adventure", "Use event not defined.");
 					}
 				}
-			else if (results.size() >= 2) {
-				std::cout << "You're not holding that item." << std::endl;
-				Logger::logEvent("Adventure", "Item not held");
+				else if (results.size() >= 2) {
+					std::cout << "You're not holding that item." << std::endl;
+					Logger::logEvent("Adventure", "Item not held");
+				}else {
+					std::cout << "I only understood you as far as wanting to use something." << std::endl;
+				}
 			}
-			else {
-				std::cout << "I only understood you as far as wanting to use something." << std::endl;
+			else if (results[0].value == "enter") {
+				if (results.size() >= 2 && m_currentLocation->wasEventDefinedForItem(results[1].value, "enter")) {
+					m_currentLocation->executeEventForItem(results[1].value, "enter");
+				}
+				else if (results.size() >= 2 && m_currentLocation->hasItem(results[1].value)) {
+					std::cout << "You can't enter that." << std::endl;
+					Logger::logEvent("Adventure", "Item enter event not defined. Skipping enter.");
+				}
+				else {
+					std::cout << "I see no such thing" << std::endl;
+					Logger::logEvent("Adventure", "Item non-existant at location or not specified");
+				}
 			}
+			else if (results[0].value == "open") {
+				if (results.size() >= 2 && m_currentLocation->wasEventDefinedForItem(results[1].value, "open")) {
+					m_currentLocation->executeEventForItem(results[1].value, "open");
+				}
+				else if (results.size() >= 2 && m_currentLocation->hasItem(results[1].value)) {
+					std::cout << "You can't open that." << std::endl;
+					Logger::logEvent("Adventure", "Item open event not defined. Skipping open.");
+				}
+				else {
+					std::cout << "I see no such thing" << std::endl;
+					Logger::logEvent("Adventure", "Item non-existant at location or not specified");
+				}
+			}
+			else if (results[0].value == "push") {
+				if (results.size() >= 2 && m_currentLocation->wasEventDefinedForItem(results[1].value, "push")) {
+					m_currentLocation->executeEventForItem(results[1].value, "push");
+				}
+				else if (results.size() >= 2 && m_currentLocation->hasItem(results[1].value)) {
+					std::cout << "You can't push that." << std::endl;
+					Logger::logEvent("Adventure", "Item push event not defined. Skipping push.");
+				}
+				else {
+					std::cout << "I see no such thing" << std::endl;
+					Logger::logEvent("Adventure", "Item non-existant at location or not specified");
+				}
+			}
+			else if (results[0].value == "pull") {
+				if (results.size() >= 2 && m_currentLocation->wasEventDefinedForItem(results[1].value, "pull")) {
+					m_currentLocation->executeEventForItem(results[1].value, "pull");
+				}
+				else if (results.size() >= 2 && m_currentLocation->hasItem(results[1].value)) {
+					std::cout << "You can't pull that." << std::endl;
+					Logger::logEvent("Adventure", "Item pull event not defined. Skipping pull.");
+				}
+				else {
+					std::cout << "I see no such thing" << std::endl;
+					Logger::logEvent("Adventure", "Item non-existant at location or not specified");
+				}
 			}
 		}
 

@@ -24,7 +24,10 @@ std::vector<TOKENDATA> Parser::parse(std::string toParse, const std::vector<TOKE
 	m_keywords.push_back(TOKENPAIR("go", TOKEN::VERB));
 	m_keywords.push_back(TOKENPAIR("drop", TOKEN::VERB));
 	m_keywords.push_back(TOKENPAIR("take", TOKEN::VERB));
+	m_keywords.push_back(TOKENPAIR("enter", TOKEN::VERB));
+	m_keywords.push_back(TOKENPAIR("open", TOKEN::VERB));
 	m_keywords.push_back(TOKENPAIR("push", TOKEN::VERB));
+	m_keywords.push_back(TOKENPAIR("pull", TOKEN::VERB));
 	m_keywords.push_back(TOKENPAIR("use", TOKEN::VERB));
 	m_keywords.push_back(TOKENPAIR("help", TOKEN::VERB));
 	m_keywords.push_back(TOKENPAIR("inspect", TOKEN::VERB));
