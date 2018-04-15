@@ -13,9 +13,9 @@
 				<setmacro name="clipperdesc" value=""/>
 				<take/>
 			</pickup>
-			<!--<use>
+			<use>
 				<print text="You don't know what to use it on."/>
-			</use>-->
+			</use>
 			<drop>
 				<print text="You lay down the clippers."/>
 				<setmacro name="clipperdesc" value="A pair of clippers lies in the grass."/>
@@ -26,6 +26,7 @@
 			</inspect>
 		</item>
 		<godirection name="north">
+			<print text="You walked off a cliff"/>
 			<suicide/>
 		</godirection>
 		<godirection name="south">

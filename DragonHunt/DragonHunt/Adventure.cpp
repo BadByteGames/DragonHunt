@@ -223,6 +223,26 @@ void Adventure::parserLoop()
 					Logger::logEvent("Adventure", "Item non-existant at location or not specified");
 				}
 			}
+			else if (results[0].value == "use") {
+				if(results.size() >= 2 && m_player.hasItem(results[1].value)) {
+					//execute use event
+					if (m_player.getItem(results[1].value).wasEventDefined("use")) {
+						m_player.getItem(results[1].value).executeEvent("use");
+					}
+					else {
+						//print an error
+						std::cout << "You can't use that item." << std::endl;
+						Logger::logEvent("Adventure", "Use event not defined.");
+					}
+				}
+			else if (results.size() >= 2) {
+				std::cout << "You're not holding that item." << std::endl;
+				Logger::logEvent("Adventure", "Item not held");
+			}
+			else {
+				std::cout << "I only understood you as far as wanting to use something." << std::endl;
+			}
+			}
 		}
 
 	}
