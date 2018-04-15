@@ -121,9 +121,15 @@ public:
 
 	void giveItem(std::string name);
 
+	void dropItem(std::string name);
+
+	bool hasItem(std::string name);
+
 	std::string evaluateMacros(std::string original);
 
 	bool isDead() const { return m_isDead; }
+
+	AdventureItem getItem(std::string name);
 
 private:
 	//map of all the GLOBAL triggers (not prefixed by !)

@@ -19,6 +19,22 @@ private:
 	std::string m_parentName;
 };
 
+class Drop : public SequenceItem {
+public:
+	Drop(Player * player, AdventureItem* parent);
+	Drop(Player * player, std::string parentName);
+	~Drop();
+
+	virtual Statement* create() override;
+	virtual int onCall() override;
+
+private:
+	Player * m_player;
+	AdventureItem*m_adventureItem;
+	std::string m_parentName;
+};
+
+
 class ItemDescription : public XMLHandler {
 public:
 	ItemDescription();

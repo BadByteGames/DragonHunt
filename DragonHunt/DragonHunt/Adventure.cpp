@@ -189,6 +189,25 @@ void Adventure::parserLoop()
 					Logger::logEvent("Adventure", "Item non-existant at location or not specified");
 				}
 			}
+			else if (results[0].value == "drop") {
+				if (results.size() >= 2 && m_player.hasItem(results[1].value)) {
+					//execute drop event
+					if (m_player.getItem(results[1].value).wasEventDefined("drop")) {
+						m_player.getItem(results[1].value).executeEvent("drop");
+					}
+					else {
+						//just drop the item
+						m_player.dropItem(results[1].value);
+					}
+				}
+				else if(results.size() >= 2) {
+					std::cout << "You're not holding that item." << std::endl;
+					Logger::logEvent("Adventure", "Item not held");
+				}
+				else {
+					std::cout << "I only understood you as far as wanting to drop something." << std::endl;
+				}
+			}
 			else if (results[0].value == "inspect") {
 				if (results.size() >= 2 && m_currentLocation->hasItem(results[1].value)) {
 					//check if inspect event defined, if not print description

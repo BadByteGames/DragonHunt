@@ -157,6 +157,19 @@ void Player::giveItem(std::string name)
 	m_adv->m_currentLocation->removeItem(name);
 }
 
+void Player::dropItem(std::string name) {
+	auto it = m_items.find(name);
+	if (it != m_items.end()) {
+		m_adv->m_currentLocation->addItem(it->first, it->second);
+		m_items.erase(name);
+	}
+}
+
+bool Player::hasItem(std::string name)
+{
+	return m_items.find(name) != m_items.end();
+}
+
 std::string Player::evaluateMacros(std::string original)
 {
 	std::string returnValue = original;
@@ -171,6 +184,14 @@ std::string Player::evaluateMacros(std::string original)
 	}
 
 	return returnValue;
+}
+
+AdventureItem Player::getItem(std::string name)
+{
+	auto it = m_items.find(name);
+	if (it != m_items.end())
+		return it->second;
+	return AdventureItem();
 }
 
 SetMacro::SetMacro(Player * player):m_player(player)

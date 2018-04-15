@@ -15,13 +15,15 @@
 			</pickup>
 			<!--<use>
 				<print text="You don't know what to use it on."/>
-			</use>
+			</use>-->
 			<drop>
 				<print text="You lay down the clippers."/>
-			</drop>-->
-			<!--<inspect>
+				<setmacro name="clipperdesc" value="A pair of clippers lies in the grass."/>
+				<drop/>
+			</drop>
+			<inspect>
 				<print text="A pair of grass clippers with green handles. There is some rust on it but is still usable."/>
-			</inspect>-->
+			</inspect>
 		</item>
 		<godirection name="north">
 			<suicide/>
