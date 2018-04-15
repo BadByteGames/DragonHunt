@@ -28,28 +28,33 @@ void AdventureItem::setupSequenceItems(Player * player)
 	Event inspect;
 	Event drop;
 	Event use;
+	Event useItem;
 
 	//add default sequence items
 	player->addSequenceItems(&pickup);
 	player->addSequenceItems(&inspect);
 	player->addSequenceItems(&drop);
 	player->addSequenceItems(&use);
+	player->addSequenceItems(&useItem);
 
 	//add item specific statements
 	pickup.addStatementPossibility("take", new Take(player, this));
 	inspect.addStatementPossibility("take", new Take(player, this));
 	drop.addStatementPossibility("take", new Take(player, this));
 	use.addStatementPossibility("take", new Take(player, this));
+	useItem.addStatementPossibility("take", new Take(player, this));
 
 	pickup.addStatementPossibility("drop", new Drop(player, this));
 	inspect.addStatementPossibility("drop", new Drop(player, this));
 	drop.addStatementPossibility("drop", new Drop(player, this));
 	use.addStatementPossibility("drop", new Drop(player, this));
+	useItem.addStatementPossibility("drop", new Drop(player, this));
 
 	this->addEvent("inspect", inspect);
 	this->addEvent("pickup", pickup);
 	this->addEvent("drop", drop);
 	this->addEvent("use", use);
+	this->addEvent("useitem", useItem);
 }
 
 ItemDescription::ItemDescription()

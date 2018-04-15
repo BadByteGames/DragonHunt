@@ -43,10 +43,10 @@
 			<gotolocation name="Clearing"/>
 		</godirection>
 	</location>
-	<!--<useitem itemname="clippers">
+	<useitem itemname="clippers">
 		<print text="You cut yourself with the clippers." />
 		<suicide/>
-	</useitem>-->
+	</useitem>
 	<ondeath>
 		<print text="You died" />
 	</ondeath>

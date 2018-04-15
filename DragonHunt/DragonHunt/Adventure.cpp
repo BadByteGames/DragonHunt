@@ -43,15 +43,18 @@ void Adventure::loadFromFile(std::string originFile)
 	Event autoCall;
 	Event trigger;
 	Event onDeath;
+	Event useItem;
 
 	//make sure to sequence items
 	m_player.addSequenceItems(&autoCall);
 	m_player.addSequenceItems(&trigger);
 	m_player.addSequenceItems(&onDeath);
+	m_player.addSequenceItems(&useItem);
 
 	this->addEvent("begin", autoCall);
 	this->addEvent("trigger", trigger);
 	this->addEvent("ondeath", onDeath);
+	this->addEvent("useitem", useItem);
 	
 
 	if (this->parseFromElement(m_doc.FirstChildElement())) {
@@ -225,6 +228,30 @@ void Adventure::parserLoop()
 			}
 			else if (results[0].value == "use") {
 				if(results.size() >= 2 && m_player.hasItem(results[1].value)) {
+					//check if "on" was used
+					if (results.size() >= 3 && results[2].value == "on") {
+						if (results.size() >= 4) {
+							//attempt to use the clippers
+							if (results[3].value == "me" && this->wasEventDefined("useitem","itemname:"+results[1].value)) {
+								//use clippers on player
+								this->executeEvent("useitem", "itemname:" + results[1].value);
+							}
+							else if (m_currentLocation->hasItem(results[3].value) && m_currentLocation->wasEventDefinedForItem(results[3].value,"useitem%itemname:" + results[1].value)) {
+								//use on item at location
+								m_currentLocation->executeEventForItem(results[3].value, "useitem%itemname:" + results[1].value);
+							}
+							else if (m_player.hasItem(results[3].value) && m_player.getItem(results[3].value).wasEventDefined("useitem", "itemname:" + results[1].value)) {
+								//use on item in inventory
+								m_player.getItem(results[3].value).executeEvent("useitem", "itemname:" + results[1].value);
+							}
+							else {
+								std::cout << "You can't do that." << std::endl;
+							}
+						}
+						else {
+							std::cout << "I only understood you as far as wanting to use the " << results[1].value << " on something." << std::endl;
+						}
+					}else
 					//execute use event
 					if (m_player.getItem(results[1].value).wasEventDefined("use")) {
 						m_player.getItem(results[1].value).executeEvent("use");
