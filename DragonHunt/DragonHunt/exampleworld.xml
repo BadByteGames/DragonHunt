@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<adventure name="test" version="1.0" start="Clearing">
+	<cc>
+		<li>This test adventure is in public domain and allowed for use by anybody.</li>
+		<li>Originally written by Robert White (armedturret).</li>
+	</cc>
+	<location name="Clearing">
+		<description>A plain green grassy clearing. The grass is short as if cut recently. %clipperdesc% </description>
+		<item name="clippers">
+			<description>A pair of grass clippers with green handles. There is some rust on it but is still usable.</description>
+			<pickup>
+				<print text="You pick up the clippers."/>
+				<setmacro name="clipperdesc" value=""/>
+				<take/>
+			</pickup>
+			<use>
+				<print text="You don't know what to use it on."/>
+			</use>
+			<drop>
+				<print text="You lay down the clippers."/>
+				<setmacro name="clipperdesc" value="A pair of clippers lies in the grass."/>
+				<drop/>
+			</drop>
+			<inspect>
+				<print text="A pair of grass clippers with green handles. There is some rust on it but is still usable."/>
+			</inspect>
+		</item>
+		<godirection name="north">
+			<print text="You walked off a cliff"/>
+			<suicide/>
+		</godirection>
+		<godirection name="south">
+			<gotolocation name="Place"/>
+		</godirection>
+		<arrivefirsttime>
+			<!--Set clippers description-->
+			<setmacro name="clipperdesc" value="A pair of clippers lies in the grass."/>
+		</arrivefirsttime>
+	</location>
+	<location name="Place">
+		<description>Smpl Txt</description>
+		<godirection name="north">
+			<gotolocation name="Clearing"/>
+		</godirection>
+	</location>
+	<useitem itemname="clippers">
+		<print text="You cut yourself with the clippers." />
+		<suicide/>
+	</useitem>
+	<ondeath>
+		<print text="You died" />
+	</ondeath>
+</adventure>
