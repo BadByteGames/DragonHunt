@@ -4,7 +4,8 @@ DragonHunt is a text adventure engine developed in c++ based around XML. The eng
 ## Development
 Dragon hunt is developed in Visual Sudio 2017 by armedturret.
 
-MacOS testing is done by ZedLepping.
+MacOS testing is done by ZedLeppin.
+Note: MacOS is currently not supported but the could change
 
 The project is also occasionally tested with a Makefile using g++.
 
