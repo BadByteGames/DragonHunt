@@ -165,7 +165,12 @@ public:
 			a.loadFromFile(fileName);
 			a.destroy();
 		}
-		return 0;
+		else {
+			std::cout << "Usage:\n\t-file <filename>\n\t-https <fileadress>" << std::endl;
+			return EASYCMD_BADARGS;
+		}
+
+		return EASYCMD_OK;
 	}
 };
 

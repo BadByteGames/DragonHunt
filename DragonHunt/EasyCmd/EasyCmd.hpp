@@ -146,6 +146,10 @@ namespace EasyCmd {
 	};
 
 	struct CommandInfo {
+		CommandInfo() {}
+		CommandInfo(std::string description) :description(description) {}
+		CommandInfo(std::string description, std::string name) :description(description), name(name) {}
+
 		std::string name;
 		std::string description;
 	};
@@ -426,7 +430,6 @@ namespace EasyCmd {
 					std::cout << c.name << ": No Description Available" << std::endl;
 				}
 			}
-			std::cout << "size: "<< m_added->getCmdInfo().size() << std::endl;
 			return EASYCMD_OK;
 		}
 
@@ -461,8 +464,8 @@ namespace EasyCmd {
 			this->setDefaultCommand(new DefaultMain());
 			this->setAddedEvent(new DefaultAdd());
 			if (inf.BasicUtilities) {
-				this->addCommand("version", new VersionCMD());
-				this->addCommand("help", new Help(this->m_added));
+				this->addCommand("version", new VersionCMD(), EasyCmd::CommandInfo("Tells the command version"));
+				this->addCommand("help", new Help(this->m_added), EasyCmd::CommandInfo("Gets the list of commands"));
 				//add "config" command if UseGlobalConfig enabled
 				if (inf.UseGlobalConfig) {
 					this->addCommand("config", new Config());

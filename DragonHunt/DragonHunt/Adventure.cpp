@@ -21,7 +21,6 @@ void Adventure::loadFromFile(std::string originFile)
 	m_doc.LoadFile(originFile.c_str());
 
 	if (m_doc.FirstChildElement("adventure") == NULL) {
-		std::cout << "An error occurred, check runtime.log for details." << std::endl;
 		Logger::logEvent("error", "Element \"adventure\" was not found.");
 		return;
 	}
@@ -58,9 +57,7 @@ void Adventure::loadFromFile(std::string originFile)
 	
 
 	if (this->parseFromElement(m_doc.FirstChildElement())) {
-		Logger::logEvent("Adventure", "Adventure parsing failed");
-		std::string a;
-		std::getline(std::cin, a);
+		Logger::logEvent("error", "XML parsing failed");
 	}
 	else {
 		//begin game
@@ -168,7 +165,7 @@ void Adventure::parserLoop()
 			}
 			else if (results[0].value == "go") {
 				if (results.size() >= 2 && !(m_currentLocation->wasEventDefined("godirection", "name:" + results[1].value))) {
-					std::cout << "I only understood you as far as wanting to go somewhere." << std::endl;
+					std::cout << "You can't go there." << std::endl;
 					Logger::logEvent("Adventure", "Unknown direction \"" + results[1].value + "\"");
 				}
 				else if(results.size() >= 2) {

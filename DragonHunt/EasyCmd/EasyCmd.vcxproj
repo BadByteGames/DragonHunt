@@ -26,7 +26,7 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{C0D1A5C5-12E0-4C7B-811F-D7220D34548D}</ProjectGuid>
     <RootNamespace>EasyCmd</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
