@@ -1,0 +1,7 @@
+# At LEAST 3.11
+cmake_minimum_required(VERSION 3.11 FATAL_ERROR)
+project(DragonHunt VERSION 0.1 LANGUAGES CXX)
+
+# Stuff in the project
+add_subdirectory(lib)
+add_subdirectory(DragonHunt)
