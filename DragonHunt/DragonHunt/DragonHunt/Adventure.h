@@ -1,6 +1,6 @@
 #pragma once
 #include <string>
-#include <tinyxml2.h> // xml stuff
+#include <tinyxml2\tinyxml2.h> // xml stuff
 
 #include "XMLHandler.h"//custom xml stuff
 

@@ -2,7 +2,7 @@
 
 #include <unordered_map>
 #include <vector>
-#include <tinyxml2.h>
+#include <tinyxml2\tinyxml2.h>
 
 //generic class for Event
 class Statement {

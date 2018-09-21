@@ -1,3 +1,4 @@
+
 # Define an executable
 file(GLOB dragonhunt_SRC
     "src/*.h"
@@ -9,8 +10,8 @@ add_executable(dragonhunt
 
 # Define the libraries this project depends upon
 target_link_libraries(dragonhunt
-    tinyxml2)
+    PUBLIC Boost::filesystem tinyxml2)
 
-message(STATUS "include: " ${tp_include_dir})
+message(STATUS "include: " ${tinyxml2_INCLUDE_DIR})
 
-target_include_directories(dragonhunt PUBLIC ${tp_include_dir})
+target_include_directories(dragonhunt PUBLIC ${tinyxml2_INCLUDE_DIR})
