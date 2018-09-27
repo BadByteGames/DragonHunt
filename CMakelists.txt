@@ -16,12 +16,12 @@ HunterGate(
 project(DragonHunt VERSION 1.1 LANGUAGES CXX)
 
 #install boost filesystem to test
-hunter_add_package(Boost COMPONENTS filesystem)
+#hunter_add_package(Boost COMPONENTS filesystem)
 #install tinyxml2 for parsing xml
 hunter_add_package(Tinyxml2)
 
 #time to add the packages
-find_package(Boost CONFIG REQUIRED filesystem)
+#find_package(Boost CONFIG REQUIRED filesystem)
 find_package(Tinyxml2 REQUIRED)
 
 #the executable

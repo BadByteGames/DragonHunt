@@ -10,7 +10,7 @@ add_executable(dragonhunt
 
 # Define the libraries this project depends upon
 target_link_libraries(dragonhunt
-    PUBLIC Boost::filesystem tinyxml2)
+    PUBLIC tinyxml2)
 
 message(STATUS "include: " ${tinyxml2_INCLUDE_DIR})
 
