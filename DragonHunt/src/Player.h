@@ -144,7 +144,7 @@ private:
 	std::unordered_map<std::string, AdventureItem> m_items;
 
 	//wheter or not the player is dead
-	bool m_isDead;
+	bool m_isDead = false;
 
 	Adventure* m_adv;
 };
