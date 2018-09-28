@@ -50,7 +50,7 @@ private:
 	//name, value
 	std::unordered_map<std::string, std::string> m_synonyms;
 
-	Location* m_currentLocation;
+	Location* m_currentLocation = nullptr;
 
 	Player m_player;
 };

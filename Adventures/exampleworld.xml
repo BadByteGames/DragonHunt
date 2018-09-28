@@ -48,6 +48,9 @@
 		<print text="You cut yourself with the clippers." />
 		<suicide/>
 	</useitem>
+	<begin>
+		<print text="test"/>
+	</begin>
 	<ondeath>
 		<print text="You died" />
 	</ondeath>
