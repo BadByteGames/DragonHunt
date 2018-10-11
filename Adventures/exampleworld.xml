@@ -8,7 +8,7 @@
 	<location name="Clearing">
 		<description>A plain green grassy clearing. The grass is short as if cut recently. %clipperdesc% </description>
 		<item name="clippers">
-			<description>A pair of grass clippers with green handles. There is some rust on it but is still usable.</description>
+			<description>A pair of grass clippers with green handles. There is some rust on them but they are still usable.</description>
 			<pickup>
 				<print text="You pick up the clippers."/>
 				<setmacro name="clipperdesc" value=""/>
@@ -23,7 +23,7 @@
 				<drop/>
 			</drop>
 			<inspect>
-				<print text="A pair of grass clippers with green handles. There is some rust on it but is still usable."/>
+				<print text="A pair of grass clippers with green handles. There is some rust on them but they are still usable."/>
 			</inspect>
 		</item>
 		<godirection name="north">
