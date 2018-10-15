@@ -8,11 +8,11 @@ MacOS testing is done by ZedLeppin.
 
 ## Building
 
-To build the project simply generate it with CMake. A stable internet connection is required for hunter to fetch the required packages. Please report an bugs in issues.
+To build the project simply generate it with CMake. A stable internet connection is required for hunter to fetch the required packages. Also, the directory must not have any spaces leading up to it in order for hunter to properly work. Please report an bugs in issues.
 
 ## Contributing
 
-If you can figure out a cross platform way to get the contents of an https site, please contact me. The option should be easily buildable with CMake and not require downloads of other languages (i.e OpenSSL needs PERL).
+Create a fork of the repository and when your modification is done, please test it at least on windows then make a pull request describing what you have changed. No pull requests will be allowed requiring downloads of any other software by the user manually other than CMake and their chosen toolchain.
 
 ## Installing
 
