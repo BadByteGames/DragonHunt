@@ -36,7 +36,7 @@ void Adventure::loadFromFile(std::string originFile)
 	l->setupSequences(&m_player);
 	this->addChild("location", l, XMLChildFlag::MULTIPLE | XMLChildFlag::REQUIRED);
 	this->addChild("cc", new CCHandler());
-	this->addChild("synonym", new Synonym());
+	this->addChild("synonym", new Synonym(), XMLChildFlag::MULTIPLE);
 
 	//create events
 	Event autoCall;
