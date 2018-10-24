@@ -25,4 +25,4 @@ To run the tool, use the syntax
 
 ## Documentation
 
-TODO: Make Docs
+https://docs.google.com/document/d/1fU4OriGHD06t7YAr_UQk6ib1Dczfomqbfl71o5kf5jw/edit?usp=sharing
