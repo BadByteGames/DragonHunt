@@ -15,6 +15,9 @@ Event::~Event()
 
 int Event::parseFromElement(tinyxml2::XMLElement* rootNode)
 {
+	//clear the previous sequence
+	m_sequence.clear();
+
 	//go through all the children of that element
 	auto* rootChild = rootNode->FirstChild();
 	while (rootChild != NULL) {

@@ -149,7 +149,7 @@ int XMLHandler::populateChildren(tinyxml2::XMLElement * elementToParse, bool use
 
 					//if argumentMacro != "", create a new event
 					if (argumentMacro != "") {
-						auto newEvent = Event(evnt->second);
+						auto newEvent = evnt->second;
 						
 						if (newEvent.parseFromElement(currentElement)) {
 							return 1;
@@ -158,17 +158,13 @@ int XMLHandler::populateChildren(tinyxml2::XMLElement * elementToParse, bool use
 						m_events.insert(std::make_pair(currentElement->Name() + argumentMacro,newEvent));
 					}
 					else {
-						auto newEvent = Event(evnt->second);
+						auto newEvent = evnt->second;
 
 						if (newEvent.parseFromElement(currentElement)) {
 							return 1;
 						}
 
 						m_events.insert(std::make_pair(currentElement->Name() + argumentMacro, newEvent));
-
-						if (evnt->second.parseFromElement(currentElement)) {
-							return 1;
-						}
 					}
 
 					//next we add it to the defined events

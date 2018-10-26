@@ -10,7 +10,7 @@ public:
 	Take(Player * player, std::string parentName);
 	~Take();
 
-	virtual Statement* create() override;
+	virtual SequenceItem* create() override;
 	virtual int onCall() override;
 
 private:
@@ -25,7 +25,7 @@ public:
 	Drop(Player * player, std::string parentName);
 	~Drop();
 
-	virtual Statement* create() override;
+	virtual SequenceItem* create() override;
 	virtual int onCall() override;
 
 private:

@@ -28,7 +28,7 @@ void AdventureItem::setupSequenceItems(Player * player)
 	Event inspect;
 	Event drop;
 	Event use;
-	Event useItem;
+	Event useItem; //<- Different from use (other item)
 	Event enter;
 	Event open;
 	Event push;
@@ -97,7 +97,7 @@ Take::~Take()
 {
 }
 
-Statement * Take::create()
+SequenceItem * Take::create()
 {
 	return new Take(m_player,m_adventureItem->getAttribute("name"));
 }
@@ -120,7 +120,7 @@ Drop::~Drop()
 {
 }
 
-Statement * Drop::create()
+SequenceItem * Drop::create()
 {
 	return new Drop(m_player, m_adventureItem->getAttribute("name"));
 }
