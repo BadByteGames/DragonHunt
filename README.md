@@ -8,7 +8,7 @@ MacOS testing is done by ZedLeppin.
 
 ## Building
 
-To build the project simply generate it with CMake. A stable internet connection is required for hunter to fetch the required packages. Also, the directory must not have any spaces leading up to it in order for hunter to properly work. Please report an bugs in issues.
+To build the project simply generate it with CMake. Please report an bugs in issues.
 
 ## Contributing
 
